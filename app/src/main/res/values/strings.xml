@@ -28,7 +28,7 @@
     <string name="log_out">Log out</string>
     <string name="remember_password">Remember password</string>
     <string name="sign_up">Sign Up</string>
-    <string name="app_status">APP STATUS</string>
+    <string name="app_setting">APP SETTING</string>
     <string name="wifi_access">Wifi Access</string>
     <string name="sync">Sync</string>
     <string name="bluetooth">Bluetooth</string>

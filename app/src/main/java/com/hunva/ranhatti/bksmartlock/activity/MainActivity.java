@@ -4,15 +4,29 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.hunva.ranhatti.bksmartlock.R;
+import com.hunva.ranhatti.bksmartlock.fragment.FragmentAdmin;
 import com.hunva.ranhatti.bksmartlock.fragment.FragmentMainDefault;
+import com.hunva.ranhatti.bksmartlock.fragment.FragmentManagementLock;
+import com.hunva.ranhatti.bksmartlock.fragment.FragmentUser;
 
 public class MainActivity extends AppCompatActivity {
 
+    // DEFINE GLOBAL VARIABLE
+    ImageButton btnMainChangeFragment;
+    TextView textNameActivity;
 
-    // Fragment
+    // FRAGMENT
+    String fragmentTag;
     FragmentMainDefault fragmentMainDefault;
+    FragmentAdmin fragmentAdmin;
+    FragmentManagementLock fragmentManagementLock;
+    FragmentUser fragmentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,10 +34,30 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         register();
+        addEvent();
     }
 
     private void register() {
-        changeMainActivityFragment("default");
+        btnMainChangeFragment = findViewById(R.id.btnMainChangeFragment);
+        textNameActivity = findViewById(R.id.textNameActivity);
+
+        fragmentTag = "default";
+        changeMainActivityFragment(fragmentTag);
+    }
+
+    private void addEvent() {
+        btnMainChangeFragment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(fragmentTag.equals("default")){
+                    fragmentTag = "managementLock";
+                    changeMainActivityFragment(fragmentTag);
+                }else{
+                    fragmentTag = "default";
+                    changeMainActivityFragment(fragmentTag);
+                }
+            }
+        });
     }
 
     private void changeMainActivityFragment(String fragmentTag){
@@ -32,22 +66,17 @@ public class MainActivity extends AppCompatActivity {
         Fragment fragmentMainActivity;
 
         switch (fragmentTag) {
-            case "default":
-                fragmentMainActivity = new FragmentMainDefault();
-                fragmentMainDefault = (FragmentMainDefault) fragmentMainActivity;
-                break;
             case "user":
-                fragmentMainActivity = new FragmentMainDefault();
-                fragmentMainDefault = (FragmentMainDefault) fragmentMainActivity;
+                fragmentMainActivity = new FragmentUser();
+                fragmentUser = (FragmentUser) fragmentMainActivity;
                 break;
-
             case "admin":
-                fragmentMainActivity = new FragmentMainDefault();
-                fragmentMainDefault = (FragmentMainDefault) fragmentMainActivity;
+                fragmentMainActivity = new FragmentAdmin();
+                fragmentAdmin = (FragmentAdmin) fragmentMainActivity;
                 break;
             case "managementLock":
-                fragmentMainActivity = new FragmentMainDefault();
-                fragmentMainDefault = (FragmentMainDefault) fragmentMainActivity;
+                fragmentMainActivity = new FragmentManagementLock();
+                fragmentManagementLock = (FragmentManagementLock) fragmentMainActivity;
                 break;
             default:
                 fragmentMainActivity = new FragmentMainDefault();
