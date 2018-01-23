@@ -6,6 +6,6 @@
     <color name="colorBackGround">#ffffff</color>
     <color name="colorTitleText">#90a3b1</color>
     <color name="colorText">#645a5a</color>
-    <color name="colorDivider">#e1e1e1</color>
+    <color name="colorDivider">#a6a2a2</color>
     <color name="colorTextClickable">#0096f9</color>
 </resources>

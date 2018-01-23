@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">BkGuardian</string>
-    <string name="app_title">BK GUARDIAN</string>
+    <string name="app_name">BkSmartLock</string>
+    <string name="app_title">BK SMART LOCK</string>
     <string name="password">Passwords : \t </string>
     <string name="log_in">Log In</string>
     <string name="notify_wrong_information">Please check your account information</string>
