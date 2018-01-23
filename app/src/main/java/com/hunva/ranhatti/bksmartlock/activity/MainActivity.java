@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
                 fragmentMainActivity = new FragmentMainDefault();
                 fragmentMainDefault = (FragmentMainDefault) fragmentMainActivity;
                 break;
+
             case "admin":
                 fragmentMainActivity = new FragmentMainDefault();
                 fragmentMainDefault = (FragmentMainDefault) fragmentMainActivity;
