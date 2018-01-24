@@ -120,9 +120,8 @@ public class LogInActivity extends AppCompatActivity {
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(LogInActivity.this, "Haven't program yet", Toast.LENGTH_LONG);
-//                Intent moveToSignUpActivity = new Intent(LogInActivity.this, SignUpActivity.class);
-//                startActivity(moveToSignUpActivity);
+                Intent moveToSignUpActivity = new Intent(LogInActivity.this, SignUpActivity.class);
+                startActivity(moveToSignUpActivity);
             }
         });
     }
@@ -277,6 +276,7 @@ public class LogInActivity extends AppCompatActivity {
                         Toast.makeText(LogInActivity.this, R.string.notify_access, Toast.LENGTH_LONG).show();
                         Intent moveToMainActivity = new Intent(LogInActivity.this, MainActivity.class);
                         startActivity(moveToMainActivity);
+                        finish();
                     }
                 },
                 new Response.ErrorListener() {

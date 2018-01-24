@@ -2,14 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hunva.ranhatti.bksmartlock">
 
-    <!--CONTROL WIFI -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <!-- CONTROL WIFI -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
-    <!--LOAD DATABASE ON SEVER SQLite-->
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- LOAD DATABASE ON SEVER SQLite -->
+    <uses-permission android:name="android.permission.INTERNET" />
 
-    <!--CHECK NETWORK CONNECTION-->
+    <!-- CHECK NETWORK CONNECTION -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
@@ -26,11 +26,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activity.LogInActivity"
             android:screenOrientation="portrait" />
-
+        <activity android:name=".activity.SignUpActivity"></activity>
     </application>
 
 </manifest>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imgaeSatusLock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/none"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/icons_lock_history_locked" />
+
+    <TextView
+        android:id="@+id/textTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/default_time"
+        app:layout_constraintBottom_toBottomOf="@+id/imgaeSatusLock"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imgaeSatusLock" />
+
+    <TextView
+        android:id="@+id/textAction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/default_action"
+        app:layout_constraintBottom_toBottomOf="@+id/imgaeSatusLock"
+        app:layout_constraintStart_toEndOf="@+id/imgaeSatusLock"
+        app:layout_constraintTop_toTopOf="@+id/imgaeSatusLock" />
+</android.support.constraint.ConstraintLayout>

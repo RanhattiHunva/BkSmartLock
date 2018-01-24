@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.hunva.ranhatti.bksmartlock.activity.SignUpActivity">
+
+    <ImageButton
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@null"
+        android:contentDescription="@string/none"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/icons_back" />
+
+    <TextView
+        android:id="@+id/textNameActivity"
+        style="@style/TextTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/sign_up"
+        app:layout_constraintBottom_toBottomOf="@+id/btnBack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnBack" />
+
+    <TextView
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="48dp"
+        android:background="@color/colorDivider"
+        android:text="@string/none"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textSignUpFullName"
+        style="@style/TextNormal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:labelFor="@+id/edtSignUpFullName"
+        android:text="@string/full_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+    <EditText
+        android:id="@+id/edtSignUpFullName"
+        style="@style/TextNormal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="2dp"
+        android:inputType="textPersonName"
+        android:background="@drawable/border_edit_text_styles"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textSignUpFullName" />
+
+    <TextView
+        android:id="@+id/textSignUpUsername"
+        style="@style/TextNormal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:labelFor="@+id/edtSignUpUsername"
+        android:text="@string/user_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtSignUpFullName" />
+
+    <EditText
+        android:id="@+id/edtSignUpUsername"
+        style="@style/TextNormal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="2dp"
+        android:inputType="textPersonName"
+        android:background="@drawable/border_edit_text_styles"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textSignUpUsername" />
+
+    <TextView
+        android:id="@+id/textSignUpPasswords"
+        style="@style/TextNormal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:labelFor="@+id/edtSignUpPasswords"
+        android:text="@string/password"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtSignUpUsername" />
+
+    <EditText
+        android:id="@+id/edtSignUpPasswords"
+        style="@style/TextNormal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="2dp"
+        android:inputType="textPassword"
+        android:background="@drawable/border_edit_text_styles"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textSignUpPasswords" />
+
+    <TextView
+        android:id="@+id/textSignUpConfirmPasswords"
+        style="@style/TextNormal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:labelFor="@+id/edtSignUpConfirmPasswords"
+        android:text="@string/confirm_passwords"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtSignUpPasswords" />
+
+    <EditText
+        android:id="@+id/edtSignUpConfirmPasswords"
+        style="@style/TextNormal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="2dp"
+        android:inputType="textPassword"
+        android:background="@drawable/border_edit_text_styles"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textSignUpConfirmPasswords" />
+
+    <TextView
+        android:id="@+id/textSignUpPosition"
+        style="@style/TextNormal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:labelFor="@+id/edtSignUpPosition"
+        android:text="@string/position"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtSignUpConfirmPasswords" />
+
+    <EditText
+        android:id="@+id/edtSignUpPosition"
+        style="@style/TextNormal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="2dp"
+        android:inputType="text"
+        android:background="@drawable/border_edit_text_styles"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textSignUpPosition" />
+
+    <TextView
+        android:id="@+id/textSignUpDepartment"
+        style="@style/TextNormal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:labelFor="@+id/edtSignUpDepartment"
+        android:text="@string/department"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtSignUpPosition" />
+
+    <EditText
+        android:id="@+id/edtSignUpDepartment"
+        style="@style/TextNormal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="2dp"
+        android:inputType="text"
+        android:background="@drawable/border_edit_text_styles"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textSignUpDepartment" />
+
+    <TextView
+        android:id="@+id/textSignUpPhoneNumber"
+        style="@style/TextNormal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:labelFor="@+id/edtSignUpPhoneNumber"
+        android:text="@string/phone_number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtSignUpDepartment" />
+
+    <EditText
+        android:id="@+id/edtSignUpPhoneNumber"
+        style="@style/TextNormal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="2dp"
+        android:inputType="textPassword|phone"
+        android:background="@drawable/border_edit_text_styles"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textSignUpPhoneNumber" />
+
+    <TextView
+        android:id="@+id/textSignUpEmail"
+        style="@style/TextNormal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:labelFor="@+id/edtSignUpEmail"
+        android:text="@string/email"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtSignUpPhoneNumber" />
+
+    <EditText
+        android:id="@+id/edtSignUpEmail"
+        style="@style/TextNormal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="2dp"
+        android:inputType="textEmailAddress|textPassword"
+        android:background="@drawable/border_edit_text_styles"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textSignUpEmail" />
+
+    <Button
+        android:id="@+id/btnSignUpSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/ok"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnSignUpCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/cancel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline2" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+</android.support.constraint.ConstraintLayout>

@@ -1,8 +1,6 @@
 package com.hunva.ranhatti.bksmartlock.fragment;
 
-import android.app.Activity;
 import android.app.Fragment;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -18,8 +16,6 @@ import android.widget.Toast;
 import com.hunva.ranhatti.bksmartlock.R;
 import com.hunva.ranhatti.bksmartlock.activity.MainActivity;
 import com.hunva.ranhatti.bksmartlock.dataControl.OfflineDatabase;
-
-import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by Master on 1/23/2018.
@@ -59,6 +55,10 @@ public class FragmentMainDefault extends Fragment{
 
         // GET ACTIVITY
         activity = (MainActivity) getActivity();
+
+        // GET DATABASE AND SharePreferences
+        database = activity.getDatabase();
+        sharedPreferences = activity.getSharedPreferences();
     }
 
 
@@ -92,9 +92,17 @@ public class FragmentMainDefault extends Fragment{
         btnAdmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                activity.changeMainActivityFragment("admin");
+                Cursor curData = database.GetData("SELECT * FROM lock_information WHERE id = "+sharedPreferences.getInt("currentLock",0)+" LIMIT 1");
+                curData.moveToFirst();
+
+                if (curData.getInt(3)==3) {
+                    curData.close();
+                    activity.changeMainActivityFragment("admin");
+                }
+                else {
+                    Toast.makeText(activity,getString(R.string.deny_access_admin),Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
-
 }

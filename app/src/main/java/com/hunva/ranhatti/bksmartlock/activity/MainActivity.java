@@ -111,10 +111,19 @@ public class MainActivity extends AppCompatActivity {
                 curData.moveToFirst();
                 textNameActivity.setText(curData.getString(1));
                 curData.close();
+
                 btnMainChangeFragment.setImageResource(R.drawable.icons_lock_manager);
                 break;
         }
         fragmentTransaction.replace(R.id.frameMainContentFragment, fragmentMainActivity,"tagFragmentSetting");
         fragmentTransaction.commit();
+    }
+
+    public SharedPreferences getSharedPreferences() {
+        return sharedPreferences;
+    }
+
+    public OfflineDatabase getDatabase() {
+        return database;
     }
 }
