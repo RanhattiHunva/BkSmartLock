@@ -41,8 +41,7 @@ public class MainActivity extends AppCompatActivity {
         btnMainChangeFragment = findViewById(R.id.btnMainChangeFragment);
         textNameActivity = findViewById(R.id.textNameActivity);
 
-        fragmentTag = "default";
-        changeMainActivityFragment(fragmentTag);
+        changeMainActivityFragment("default");
     }
 
     private void addEvent() {
@@ -60,32 +59,39 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void changeMainActivityFragment(String fragmentTag){
+    public void changeMainActivityFragment(String fragmentTag){
 
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         Fragment fragmentMainActivity;
 
+        this.fragmentTag = fragmentTag;
         switch (fragmentTag) {
             case "user":
                 fragmentMainActivity = new FragmentUser();
                 fragmentUser = (FragmentUser) fragmentMainActivity;
+                btnMainChangeFragment.setImageResource(R.drawable.icons_back);
+                textNameActivity.setText(R.string.user_information);
                 break;
             case "admin":
                 fragmentMainActivity = new FragmentAdmin();
                 fragmentAdmin = (FragmentAdmin) fragmentMainActivity;
+                btnMainChangeFragment.setImageResource(R.drawable.icons_back);
+                textNameActivity.setText(R.string.admin);
                 break;
             case "managementLock":
                 fragmentMainActivity = new FragmentManagementLock();
                 fragmentManagementLock = (FragmentManagementLock) fragmentMainActivity;
+                btnMainChangeFragment.setImageResource(R.drawable.icons_back);
+                textNameActivity.setText(R.string.manage_lock);
                 break;
             default:
                 fragmentMainActivity = new FragmentMainDefault();
                 fragmentMainDefault = (FragmentMainDefault) fragmentMainActivity;
+                btnMainChangeFragment.setImageResource(R.drawable.icons_lock_manager);
+                textNameActivity.setText(R.string.unknown_lock);
                 break;
         }
         fragmentTransaction.replace(R.id.frameMainContentFragment, fragmentMainActivity,"tagFragmentSetting");
         fragmentTransaction.commit();
     }
-
-
 }
