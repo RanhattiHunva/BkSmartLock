@@ -59,19 +59,6 @@ public class FragmentMainDefault extends Fragment{
 
         // GET ACTIVITY
         activity = (MainActivity) getActivity();
-//        // CHECK LOG-IN FLAG IN THE SHARE PREFERENCES
-//        sharedPreferences = getSharedPreferences("dataLogin", MODE_PRIVATE);
-//        if (!sharedPreferences.getBoolean("certificationLogIn",false)){
-//            Intent moveToLogInActivity = new Intent(MainActivity.this, LogInActivity.class);
-//            startActivity(moveToLogInActivity);
-//        }else {
-//            // OPEN SQLite DATABASE
-//            database = new OfflineDatabase(this, "OfflineData.sqlite", null, 1);
-//            Cursor curData = database.GetData("SELECT * FROM lock_information WHERE id = " + sharedPreferences.getInt("currentLock", 0) + " LIMIT 1");
-//            curData.moveToFirst();
-//            textNameLock.setText(curData.getString(1));
-//            curData.close();
-//        }
     }
 
 
@@ -106,16 +93,6 @@ public class FragmentMainDefault extends Fragment{
             @Override
             public void onClick(View view) {
                 activity.changeMainActivityFragment("admin");
-//                Cursor curData = database.GetData("SELECT * FROM lock_information WHERE id = "+sharedPreferences.getInt("currentLock",0)+" LIMIT 1");
-//                curData.moveToFirst();
-//
-//                if (curData.getInt(3)==3) {
-//                    curData.close();
-//                    activity.changeMainActivityFragment("admin");
-//                }
-//                else {
-//                    Toast.makeText(MainActivity.this,getString(R.string.deny_access_admin),Toast.LENGTH_LONG).show();
-//                }
             }
         });
     }
