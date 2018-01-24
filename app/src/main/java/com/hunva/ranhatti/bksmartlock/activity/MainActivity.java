@@ -2,9 +2,12 @@ package com.hunva.ranhatti.bksmartlock.activity;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -125,5 +128,15 @@ public class MainActivity extends AppCompatActivity {
 
     public OfflineDatabase getDatabase() {
         return database;
+    }
+
+    // CHECKING INTERNET CONNECTION
+    public boolean isInternetOnline(){
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = null;
+        if (connectivityManager != null) {
+            netInfo = connectivityManager.getActiveNetworkInfo();
+        }
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 }

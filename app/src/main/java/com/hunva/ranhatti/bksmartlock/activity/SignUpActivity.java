@@ -99,16 +99,16 @@ public class SignUpActivity extends AppCompatActivity {
 
                     if ( username.isEmpty() || fullName.isEmpty() || passwords.isEmpty() || confirmPasswords.isEmpty() ||
                             position.isEmpty() || department.isEmpty() || phoneNumber.isEmpty() || email.isEmpty())
-                        Toast.makeText(SignUpActivity.this, getString(R.string.notify_empty_information), Toast.LENGTH_LONG).show();
+                        Toast.makeText(SignUpActivity.this, getString(R.string.notify_empty_information), Toast.LENGTH_SHORT).show();
                     else{
                         if (passwords.equals(confirmPasswords)){
                             insertUserInformation(urlInsertUserInformation);
                         }else{
-                            Toast.makeText(SignUpActivity.this, getString(R.string.notify_wrong_confirm_passwords), Toast.LENGTH_LONG).show();
+                            Toast.makeText(SignUpActivity.this, getString(R.string.notify_wrong_confirm_passwords), Toast.LENGTH_SHORT).show();
                         }
                     }
                 }else{
-                    Toast.makeText(SignUpActivity.this,R.string.notify_no_internet,Toast.LENGTH_LONG).show();
+                    Toast.makeText(SignUpActivity.this,R.string.notify_no_internet,Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -146,14 +146,14 @@ public class SignUpActivity extends AppCompatActivity {
                         if (response.equals("success")) {
                             insertUserLockInformation(urlInsertUserLockInformation);
                         }else{
-                            Toast.makeText(SignUpActivity.this, getString(R.string.notify_username_is_taken), Toast.LENGTH_LONG).show();
+                            Toast.makeText(SignUpActivity.this, getString(R.string.notify_username_is_taken), Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(SignUpActivity.this,getString(R.string.notify_report_app_admin),Toast.LENGTH_LONG).show();
+                        Toast.makeText(SignUpActivity.this,getString(R.string.notify_report_app_admin),Toast.LENGTH_SHORT).show();
                     }
                 }){
             @Override
@@ -181,18 +181,19 @@ public class SignUpActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         if (response.equals("success")) {
-                            Toast.makeText(SignUpActivity.this, getString(R.string.notify_sign_up_successful), Toast.LENGTH_LONG).show();
+                            Toast.makeText(SignUpActivity.this, getString(R.string.notify_sign_up_successful), Toast.LENGTH_SHORT).show();
                             Intent moveToLogInActivity = new Intent(SignUpActivity.this, LogInActivity.class);
                             startActivity(moveToLogInActivity);
+                            finish();
                         }else{
-                            Toast.makeText(SignUpActivity.this, getString(R.string.notify_username_is_taken), Toast.LENGTH_LONG).show();
+                            Toast.makeText(SignUpActivity.this, getString(R.string.notify_username_is_taken), Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(SignUpActivity.this,getString(R.string.notify_report_app_admin),Toast.LENGTH_LONG).show();
+                        Toast.makeText(SignUpActivity.this,getString(R.string.notify_report_app_admin),Toast.LENGTH_SHORT).show();
                     }
                 }){
             @Override

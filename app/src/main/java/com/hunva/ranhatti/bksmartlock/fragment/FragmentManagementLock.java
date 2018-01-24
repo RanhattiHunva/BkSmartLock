@@ -1,8 +1,6 @@
 package com.hunva.ranhatti.bksmartlock.fragment;
 
-import android.Manifest;
 import android.app.Fragment;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -59,7 +57,7 @@ public class FragmentManagementLock extends Fragment {
         activity = (MainActivity) getActivity();
 
         // INITIALIZE DATABASE AND SHARE PREFERENCE
-        database = new OfflineDatabase(activity, "OfflineData.sqlite",null, 1);
+        database = activity.getDatabase();
         sharedPreferences = activity.getSharedPreferences();
 
         // INITIALIZE THE LIST OF GRID VIEW

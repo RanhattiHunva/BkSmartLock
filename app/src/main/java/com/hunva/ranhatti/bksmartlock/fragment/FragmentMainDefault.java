@@ -96,11 +96,12 @@ public class FragmentMainDefault extends Fragment{
                 curData.moveToFirst();
 
                 if (curData.getInt(3)==3) {
-                    curData.close();
                     activity.changeMainActivityFragment("admin");
+                    curData.close();
                 }
                 else {
-                    Toast.makeText(activity,getString(R.string.deny_access_admin),Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity,getString(R.string.deny_access_admin),Toast.LENGTH_SHORT).show();
+                    curData.close();
                 }
             }
         });

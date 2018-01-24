@@ -105,13 +105,13 @@ public class LogInActivity extends AppCompatActivity {
                     String username = edtAccount.getText().toString();
                     String passwords = edtPassword.getText().toString();
                     if ((username.isEmpty()) || (passwords.isEmpty())) {
-                        Toast.makeText(LogInActivity.this, getString(R.string.notify_empty_information), Toast.LENGTH_LONG).show();
+                        Toast.makeText(LogInActivity.this, getString(R.string.notify_empty_information), Toast.LENGTH_SHORT).show();
                     } else {
                         // GET ALL USER INFORMATION AND MOVE TO MAIN ACTIVITY IF LOGIN SUCCESS FULL
                         getUserInformation(urlGetUserInformation, username, passwords);
                     }
                 }else{
-                    Toast.makeText(LogInActivity.this, getString(R.string.notify_no_internet), Toast.LENGTH_LONG).show();
+                    Toast.makeText(LogInActivity.this, getString(R.string.notify_no_internet), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -183,7 +183,7 @@ public class LogInActivity extends AppCompatActivity {
 
                         if (!flagLogInSuccessful){
                             // NOTIFY IF INFORMATION IS WRONG
-                            Toast.makeText(LogInActivity.this, R.string.notify_wrong_information, Toast.LENGTH_LONG).show();
+                            Toast.makeText(LogInActivity.this, R.string.notify_wrong_information, Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -191,7 +191,7 @@ public class LogInActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // GET NOTIFY FOR SYSTEM ERROR, NEED ADD MORE ACTION.
-                        Toast.makeText(LogInActivity.this, "Error system, Please report this to admin!",Toast.LENGTH_LONG).show();
+                        Toast.makeText(LogInActivity.this, "Error system, Please report this to admin!",Toast.LENGTH_SHORT).show();
                     }
                 });
         requestQueue.add(jsonArrayRequest);
@@ -236,7 +236,7 @@ public class LogInActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // GET NOTIFY FOR SYSTEM ERROR, NEED ADD MORE ACTION.
-                        Toast.makeText(LogInActivity.this, "Error system, Please report this to admin!",Toast.LENGTH_LONG).show();
+                        Toast.makeText(LogInActivity.this, "Error system, Please report this to admin!",Toast.LENGTH_SHORT).show();
                     }
                 });
         requestQueue.add(jsonArrayRequest);
@@ -273,7 +273,7 @@ public class LogInActivity extends AppCompatActivity {
                         }
 
                         // TOAST NOTIFY THAT LOG IN SUCCESSFUL AND MOVE BACK TO MAIN ACTIVITY
-                        Toast.makeText(LogInActivity.this, R.string.notify_access, Toast.LENGTH_LONG).show();
+                        Toast.makeText(LogInActivity.this, R.string.notify_access, Toast.LENGTH_SHORT).show();
                         Intent moveToMainActivity = new Intent(LogInActivity.this, MainActivity.class);
                         startActivity(moveToMainActivity);
                         finish();
@@ -283,7 +283,7 @@ public class LogInActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // GET NOTIFY FOR SYSTEM ERROR, NEED ADD MORE ACTION.
-                        Toast.makeText(LogInActivity.this, "Error system, Please report this to admin!",Toast.LENGTH_LONG).show();
+                        Toast.makeText(LogInActivity.this, "Error system, Please report this to admin!",Toast.LENGTH_SHORT).show();
                     }
                 });
         requestQueue.add(jsonArrayRequest);
