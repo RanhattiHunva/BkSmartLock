@@ -36,7 +36,7 @@
     <string name="data_synced">DATA SYNCED</string>
     <string name="data_not_synced">DATA NOT SYNCED</string>
     <string name="connected">CONNECTED</string>
-    <string name="more_status">More status</string>
+    <string name="more_setting">More setting</string>
     <string name="change_information">Change information</string>
     <string name="change_password">Change passwords</string>
     <string name="default_time">13:00</string>

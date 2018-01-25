@@ -13,6 +13,10 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.hunva.ranhatti.bksmartlock.R;
 import com.hunva.ranhatti.bksmartlock.activity.MainActivity;
 import com.hunva.ranhatti.bksmartlock.dataControl.OfflineDatabase;
@@ -29,11 +33,17 @@ public class FragmentMainDefault extends Fragment{
     ImageButton btnChangeStatusLock;
     TextView textStatusLock;
 
+    // GET ACTIVITY
     MainActivity activity;
 
+    // SHARE PREFERENCES
     SharedPreferences sharedPreferences;
 
+    // SQLite DATA OFFLINE
     OfflineDatabase database;
+
+    // FIRE-BASE DATABASE
+    DatabaseReference fireBaseDatabase;
 
     @Nullable
     @Override
@@ -56,9 +66,10 @@ public class FragmentMainDefault extends Fragment{
         // GET ACTIVITY
         activity = (MainActivity) getActivity();
 
-        // GET DATABASE AND SharePreferences
+        // GET OFFLINE DATABASE, SHARE PREFERENCES AND FIRE-BASE
         database = activity.getDatabase();
         sharedPreferences = activity.getSharedPreferences();
+        fireBaseDatabase = activity.getFireBaseDatabase();
     }
 
 
@@ -72,10 +83,13 @@ public class FragmentMainDefault extends Fragment{
                 if (StatusLock.equals(getString(R.string.locked))) {
                     textStatusLock.setText(getString(R.string.unlocked));
                     btnChangeStatusLock.setImageResource(R.drawable.icons_unlocked);
+                    fireBaseDatabase.child("lock1").setValue(false);
+
                 }
                 else {
                     textStatusLock.setText(getString(R.string.locked));
                     btnChangeStatusLock.setImageResource(R.drawable.icons_locked);
+                    fireBaseDatabase.child("remote lock").child("lock1").setValue(true);
                 }
             }
         });

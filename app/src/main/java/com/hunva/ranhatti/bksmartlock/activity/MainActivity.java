@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.hunva.ranhatti.bksmartlock.R;
 import com.hunva.ranhatti.bksmartlock.dataControl.OfflineDatabase;
 import com.hunva.ranhatti.bksmartlock.fragment.FragmentAdmin;
@@ -35,11 +37,14 @@ public class MainActivity extends AppCompatActivity {
     FragmentManagementLock fragmentManagementLock;
     FragmentUser fragmentUser;
 
-    // SharePreferences
+    // SHARE PREFERENCES
     SharedPreferences sharedPreferences;
 
     // SQLite DATA OFFLINE
     OfflineDatabase database;
+
+    // FIRE-BASE DATABASE
+    DatabaseReference fireBaseDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void register() {
+
+        // PREFERENCES FOR THE VIEWS
         btnMainChangeFragment = findViewById(R.id.btnMainChangeFragment);
         textNameActivity = findViewById(R.id.textNameActivity);
 
@@ -64,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
             database = new OfflineDatabase(this, "OfflineData.sqlite", null, 1);
             // ADD FRAGMENT
             changeMainActivityFragment("default");
+
+            fireBaseDatabase = FirebaseDatabase.getInstance().getReference();
         }
 
     }
@@ -128,6 +137,10 @@ public class MainActivity extends AppCompatActivity {
 
     public OfflineDatabase getDatabase() {
         return database;
+    }
+
+    public DatabaseReference getFireBaseDatabase() {
+        return fireBaseDatabase;
     }
 
     // CHECKING INTERNET CONNECTION
