@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,8 +52,8 @@ public class FragmentSettingDefault extends Fragment{
 
     MainActivity activity;
 
-    String urlUpdateUserInformation = "https://bkguardian.000webhostapp.com/updateUserData.php";
-    String urlUpdateUserLockInformation = "https://bkguardian.000webhostapp.com/updateUserLockData.php";
+    String urlUpdateUserInformation = "https://bksmartlock.000webhostapp.com/updateUserData.php";
+    String urlUpdateUserLockInformation = "https://bksmartlock.000webhostapp.com/updateUserLockData.php";
 
     @Nullable
     @Override
@@ -152,7 +153,7 @@ public class FragmentSettingDefault extends Fragment{
                             updateUserLockInformation(urlUpdateUserLockInformation,curDataLock,curData.getString(1));
                             curData.close();
                         }else{
-                            Toast.makeText(getActivity().getApplicationContext(),getString(R.string.notify_report_app_admin),Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity().getApplicationContext(),"update user information fail",Toast.LENGTH_LONG).show();
                         }
                     }
                 },
@@ -160,6 +161,7 @@ public class FragmentSettingDefault extends Fragment{
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(getActivity().getApplicationContext(),getString(R.string.notify_report_app_admin),Toast.LENGTH_LONG).show();
+                        Log.d("Error! Hunva", "onErrorResponse: "+error.toString());
                     }
                 }
         ){
@@ -196,7 +198,7 @@ public class FragmentSettingDefault extends Fragment{
                             editor.apply();
                             presentSyncStatus(sharedPreferences.getBoolean("isDataChange",false));
                         }else{
-                            Toast.makeText(getActivity().getApplicationContext(),getString(R.string.notify_report_app_admin),Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity().getApplicationContext(),"update lock user information fail",Toast.LENGTH_LONG).show();
                         }
                     }
                 },
@@ -204,6 +206,7 @@ public class FragmentSettingDefault extends Fragment{
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(getActivity().getApplicationContext(),getString(R.string.notify_report_app_admin),Toast.LENGTH_LONG).show();
+                        Log.d("Error! Hunva", "onErrorResponse: "+error.toString());
                     }
                 }
         ){

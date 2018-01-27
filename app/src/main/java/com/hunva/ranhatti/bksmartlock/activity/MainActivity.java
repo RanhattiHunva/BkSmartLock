@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         register();
         addEvent();
     }
@@ -66,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         if (!sharedPreferences.getBoolean("certificationLogIn",false)){
             Intent moveToLogInActivity = new Intent(MainActivity.this, LogInActivity.class);
             startActivity(moveToLogInActivity);
+            finish();
         }else {
             // OPEN SQLite DATABASE
             database = new OfflineDatabase(this, "OfflineData.sqlite", null, 1);
@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
 
             fireBaseDatabase = FirebaseDatabase.getInstance().getReference();
         }
-
     }
 
     private void addEvent() {

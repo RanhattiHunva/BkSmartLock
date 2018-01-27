@@ -36,8 +36,8 @@ public class SignUpActivity extends AppCompatActivity {
 
     String username, fullName, passwords, confirmPasswords, position, department, phoneNumber, email;
 
-    final String urlInsertUserInformation = "https://bkguardian.000webhostapp.com/insertUserData.php";
-    final String urlInsertUserLockInformation = "https://bkguardian.000webhostapp.com/insertUserLockData.php";
+    final String urlInsertUserInformation = "https://bksmartlock.000webhostapp.com/insertUserData.php";
+    final String urlInsertUserLockInformation = "https://bksmartlock.000webhostapp.com/insertUserLockData.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

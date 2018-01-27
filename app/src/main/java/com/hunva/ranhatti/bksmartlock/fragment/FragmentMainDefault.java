@@ -83,13 +83,13 @@ public class FragmentMainDefault extends Fragment{
                 if (StatusLock.equals(getString(R.string.locked))) {
                     textStatusLock.setText(getString(R.string.unlocked));
                     btnChangeStatusLock.setImageResource(R.drawable.icons_unlocked);
-                    fireBaseDatabase.child("lock1").setValue(false);
+                    fireBaseDatabase.child("remote lock").child(String.valueOf(sharedPreferences.getInt("currentLock",0))).setValue(false);
 
                 }
                 else {
                     textStatusLock.setText(getString(R.string.locked));
                     btnChangeStatusLock.setImageResource(R.drawable.icons_locked);
-                    fireBaseDatabase.child("remote lock").child("lock1").setValue(true);
+                    fireBaseDatabase.child("remote lock").child(String.valueOf(sharedPreferences.getInt("currentLock",0))).setValue(true);
                 }
             }
         });
@@ -109,7 +109,7 @@ public class FragmentMainDefault extends Fragment{
                 Cursor curData = database.GetData("SELECT * FROM lock_information WHERE id = "+sharedPreferences.getInt("currentLock",0)+" LIMIT 1");
                 curData.moveToFirst();
 
-                if (curData.getInt(3)==3) {
+                if (curData.getInt(3)>=3) {
                     activity.changeMainActivityFragment("admin");
                     curData.close();
                 }

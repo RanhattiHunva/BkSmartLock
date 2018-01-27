@@ -104,8 +104,18 @@ public class FragmentUser extends Fragment {
                 alertDialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent moveToLogInActivity = new Intent(activity, LogInActivity.class);
-                        startActivity(moveToLogInActivity);
+                        // CHECK HAVE SYNC DATA YET
+                        if (!sharedPreferences.getBoolean("isDataChange",false)) {
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.remove("certificationLogIn");
+                            editor.putBoolean("isDataChange", false);
+                            editor.apply();
+
+                            Intent moveToLogInActivity = new Intent(activity, LogInActivity.class);
+                            startActivity(moveToLogInActivity);
+                        }else{
+                            Toast.makeText(activity,getString(R.string.notify_data_not_synced),Toast.LENGTH_LONG).show();
+                        }
                     }
                 });
 
