@@ -11,7 +11,6 @@ import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -50,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         register();
         addEvent();
     }
@@ -69,9 +69,9 @@ public class MainActivity extends AppCompatActivity {
         }else {
             // OPEN SQLite DATABASE
             database = new OfflineDatabase(this, "OfflineData.sqlite", null, 1);
-            // ADD FRAGMENT
+            // ADD FRAGMENT TO TO FRAME LAYOUT
             changeMainActivityFragment("default");
-
+            // GET FIRES-BASE
             fireBaseDatabase = FirebaseDatabase.getInstance().getReference();
         }
     }

@@ -52,8 +52,11 @@ public class FragmentSettingDefault extends Fragment{
 
     MainActivity activity;
 
-    String urlUpdateUserInformation = "https://bksmartlock.000webhostapp.com/updateUserData.php";
-    String urlUpdateUserLockInformation = "https://bksmartlock.000webhostapp.com/updateUserLockData.php";
+//    String urlUpdateUserInformation = "https://bksmartlock.000webhostapp.com/updateUserData.php";
+//    String urlUpdateUserLockInformation = "https://bksmartlock.000webhostapp.com/updateUserLockData.php";
+
+    String urlUpdateUserInformation = "http://192.168.56.1:8012/bksmartlock/updateUserData.php";
+    String urlUpdateUserLockInformation = "http://192.168.56.1:8012/bksmartlock/updateUserLockData.php";
 
     @Nullable
     @Override

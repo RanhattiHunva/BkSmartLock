@@ -1,35 +1,27 @@
 {
   "project_info": {
-    "project_number": "158580186954",
-    "firebase_url": "https://bksmartlock.firebaseio.com",
-    "project_id": "bksmartlock",
-    "storage_bucket": "bksmartlock.appspot.com"
+    "project_number": "137606011870",
+    "firebase_url": "https://bksmartlock-c3839.firebaseio.com",
+    "project_id": "bksmartlock-c3839",
+    "storage_bucket": "bksmartlock-c3839.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:158580186954:android:4395a838ab5e96a9",
+        "mobilesdk_app_id": "1:137606011870:android:4395a838ab5e96a9",
         "android_client_info": {
           "package_name": "com.hunva.ranhatti.bksmartlock"
         }
       },
       "oauth_client": [
         {
-          "client_id": "158580186954-5g5p7653154gv694a8ct37ks57meksgt.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.hunva.ranhatti.bksmartlock",
-            "certificate_hash": "3e80286d53f646e75ad546fc05e32608d7185993"
-          }
-        },
-        {
-          "client_id": "158580186954-ef64vp5vu2iv6dvb9rvv1l08mel6hmum.apps.googleusercontent.com",
+          "client_id": "137606011870-ok7vt16164jcdvb2fiufkn482pggjbj1.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBLzNxuPnIeFoTOxCbk-4GZRXWS-xuUac4"
+          "current_key": "AIzaSyBasvWaUvLZzU9dxP1ga-RzHRjopiiZONQ"
         }
       ],
       "services": {
@@ -37,13 +29,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "158580186954-ef64vp5vu2iv6dvb9rvv1l08mel6hmum.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2

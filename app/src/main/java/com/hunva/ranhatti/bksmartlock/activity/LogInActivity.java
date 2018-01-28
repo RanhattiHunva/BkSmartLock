@@ -40,9 +40,13 @@ public class LogInActivity extends AppCompatActivity {
 
     OfflineDatabase database;
 
-    final String urlGetUserInformation = "https://bksmartlock.000webhostapp.com/getUserData.php";
-    final String urlGetUserLockInformation = "https://bksmartlock.000webhostapp.com/getUserLockData.php";
-    final String urlGetLocksInformation = "https://bksmartlock.000webhostapp.com/getLockData.php";
+//    final String urlGetUserInformation = "https://bksmartlock.000webhostapp.com/getUserData.php";
+//    final String urlGetUserLockInformation = "https://bksmartlock.000webhostapp.com/getUserLockData.php";
+//    final String urlGetLocksInformation = "https://bksmartlock.000webhostapp.com/getLockData.php";
+
+    final String urlGetUserInformation = "http://192.168.56.1:8012/bksmartlock/getUserData.php";
+    final String urlGetUserLockInformation = "http://192.168.56.1:8012/bksmartlock/getUserLockData.php";
+    final String urlGetLocksInformation = "http://192.168.56.1:8012/bksmartlock/getLockData.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
