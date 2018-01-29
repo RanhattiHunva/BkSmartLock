@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:drawableStart="@drawable/icons_setting"
+        android:drawableStart="@drawable/setting"
         android:text="@string/app_setting"
         android:textColor="@color/colorText"
         android:textSize="17sp"
@@ -26,7 +26,7 @@
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:drawableStart="@drawable/icons_personal_information"
+        android:drawableStart="@drawable/personal_information"
         android:text="@string/personal_information"
         android:textColor="@color/colorText"
         android:textSize="17sp"
@@ -169,7 +169,7 @@
         android:id="@+id/frameSetting"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="32dp"
         app:layout_constraintBottom_toTopOf="@+id/divider5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -233,5 +233,16 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textPersonalInformation" />
+
+    <TextView
+        android:id="@+id/divider7"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/colorDivider"
+        android:text="@string/none"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameSetting" />
 
 </android.support.constraint.ConstraintLayout>

@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.hunva.ranhatti.bksmartlock.R;
@@ -77,16 +76,16 @@ public class FragmentManagementLock extends Fragment {
             nameLock = curData.getString(1);
             certificationAdmin = curData.getInt(3);
             if ((certificationAdmin == 1) || (certificationAdmin == 2)){
-                listLock.add(new LockPresent(nameLock,R.drawable.icons_user_lock_active));
+                listLock.add(new LockPresent(nameLock,R.drawable.user_lock_active));
             }else{
-                listLock.add(new LockPresent(nameLock,R.drawable.icons_admin_lock_active));
+                listLock.add(new LockPresent(nameLock,R.drawable.admin_lock_active));
             }
 
             lockId[i] = curData.getInt(0);
             i=i+1;
         }
         curData.close();
-        listLock.add(new LockPresent(getString(R.string.add_lock),R.drawable.icons_adding_lock));
+        listLock.add(new LockPresent(getString(R.string.add_lock),R.drawable.adding_lock));
 
         adapter = new LockPresentAdapter(activity, R.layout.element_lock_present,listLock);
         gvLock.setAdapter(adapter);
@@ -98,7 +97,7 @@ public class FragmentManagementLock extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if ((i+1)==listLock.size()){
-//                    listLock.add(listLock.size()-2, new LockPresent(getString(R.string.unknown_lock),R.drawable.icons_user_lock_active));
+//                    listLock.add(listLock.size()-2, new LockPresent(getString(R.string.unknown_lock),R.drawable.user_lock_active));
 //                    adapter.notifyDataSetChanged();
                     Toast.makeText(activity, "ADD LOCK IS STILL NOT PROGRAM", Toast.LENGTH_SHORT).show();
                 }

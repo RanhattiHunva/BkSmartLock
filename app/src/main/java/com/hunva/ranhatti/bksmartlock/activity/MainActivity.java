@@ -99,19 +99,19 @@ public class MainActivity extends AppCompatActivity {
             case "user":
                 fragmentMainActivity = new FragmentUser();
                 fragmentUser = (FragmentUser) fragmentMainActivity;
-                btnMainChangeFragment.setImageResource(R.drawable.icons_back);
+                btnMainChangeFragment.setImageResource(R.drawable.back);
                 textNameActivity.setText(R.string.user_information);
                 break;
             case "admin":
                 fragmentMainActivity = new FragmentAdmin();
                 fragmentAdmin = (FragmentAdmin) fragmentMainActivity;
-                btnMainChangeFragment.setImageResource(R.drawable.icons_back);
+                btnMainChangeFragment.setImageResource(R.drawable.back);
                 textNameActivity.setText(R.string.admin);
                 break;
             case "managementLock":
                 fragmentMainActivity = new FragmentManagementLock();
                 fragmentManagementLock = (FragmentManagementLock) fragmentMainActivity;
-                btnMainChangeFragment.setImageResource(R.drawable.icons_back);
+                btnMainChangeFragment.setImageResource(R.drawable.back);
                 textNameActivity.setText(R.string.manage_lock);
                 break;
             default:
@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
                 textNameActivity.setText(curData.getString(1));
                 curData.close();
 
-                btnMainChangeFragment.setImageResource(R.drawable.icons_lock_manager);
+                btnMainChangeFragment.setImageResource(R.drawable.lock_manager);
                 break;
         }
         fragmentTransaction.replace(R.id.frameMainContentFragment, fragmentMainActivity,"tagFragmentSetting");

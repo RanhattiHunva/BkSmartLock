@@ -23,6 +23,6 @@ public class GuestInforPresent {
     }
 
     public Integer getArrow() {
-        return R.drawable.icons_arrow_right;
+        return R.drawable.arrow_right;
     }
 }

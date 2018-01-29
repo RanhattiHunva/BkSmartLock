@@ -32,7 +32,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textStateLock"
-        app:srcCompat="@drawable/icons_locked" />
+        app:srcCompat="@drawable/locked" />
 
     <Button
         android:id="@+id/btnUser"

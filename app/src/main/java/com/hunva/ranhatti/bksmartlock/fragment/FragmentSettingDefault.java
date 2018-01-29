@@ -7,7 +7,6 @@ import android.database.Cursor;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,8 +54,8 @@ public class FragmentSettingDefault extends Fragment{
 //    String urlUpdateUserInformation = "https://bksmartlock.000webhostapp.com/updateUserData.php";
 //    String urlUpdateUserLockInformation = "https://bksmartlock.000webhostapp.com/updateUserLockData.php";
 
-    String urlUpdateUserInformation = "http://192.168.56.1:8012/bksmartlock/updateUserData.php";
-    String urlUpdateUserLockInformation = "http://192.168.56.1:8012/bksmartlock/updateUserLockData.php";
+    final String urlUpdateUserInformation = "http://192.168.56.1:8012/bksmartlock/updateUserData.php";
+    final String urlUpdateUserLockInformation = "http://192.168.56.1:8012/bksmartlock/updateUserLockData.php";
 
     @Nullable
     @Override
@@ -120,7 +119,7 @@ public class FragmentSettingDefault extends Fragment{
                     Cursor curData = database.GetData("SELECT * FROM user_information");
                     updateUserInformation(urlUpdateUserInformation, curData);
                 }else{
-                    Toast.makeText(getActivity().getApplicationContext(), getString(R.string.notify_no_internet), Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity, getString(R.string.notify_no_internet), Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -129,7 +128,7 @@ public class FragmentSettingDefault extends Fragment{
     // CHANGE INTERNET MODE
     private void presentStatusWifi(boolean isWifiOn ) {
         if (isWifiOn) {
-            btnWifi.setImageResource(R.drawable.icons_wifi_on);
+            btnWifi.setImageResource(R.drawable.wifi_on);
             if ( activity.isInternetOnline() ){
                 textStatusWifi.setText(getString(R.string.connected));
             }else{
@@ -137,15 +136,15 @@ public class FragmentSettingDefault extends Fragment{
             }
         }
         else{
-            btnWifi.setImageResource(R.drawable.icons_wifi_off);
+            btnWifi.setImageResource(R.drawable.wifi_off);
             textStatusWifi.setText(getString(R.string.disconnected));
         }
     }
 
     // UPDATE USER INFORMATION TO SEVER
-    public void updateUserInformation(String url, final Cursor curData){
+    private void updateUserInformation(String url, final Cursor curData){
         curData.moveToFirst();
-        final RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        final RequestQueue requestQueue = Volley.newRequestQueue(activity);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -156,15 +155,14 @@ public class FragmentSettingDefault extends Fragment{
                             updateUserLockInformation(urlUpdateUserLockInformation,curDataLock,curData.getString(1));
                             curData.close();
                         }else{
-                            Toast.makeText(getActivity().getApplicationContext(),"update user information fail",Toast.LENGTH_LONG).show();
+                            Toast.makeText(activity,getString(R.string.notify_report_app_admin),Toast.LENGTH_LONG).show();
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getActivity().getApplicationContext(),getString(R.string.notify_report_app_admin),Toast.LENGTH_LONG).show();
-                        Log.d("Error! Hunva", "onErrorResponse: "+error.toString());
+                        Toast.makeText(activity,getString(R.string.notify_report_app_admin),Toast.LENGTH_SHORT).show();
                     }
                 }
         ){
@@ -186,14 +184,14 @@ public class FragmentSettingDefault extends Fragment{
     }
 
     // UPDATE LOCK USER RELATIONSHIP TO SEVER
-    public void updateUserLockInformation(String url, final Cursor curData, final String username){
-        final RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+    private void updateUserLockInformation(String url, final Cursor curData, final String username){
+        final RequestQueue requestQueue = Volley.newRequestQueue(activity);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         if (response.trim().equals("success")){
-                            Toast.makeText(getActivity().getApplicationContext(),getString(R.string.notify_sync_successful),Toast.LENGTH_LONG).show();
+                            Toast.makeText(activity,getString(R.string.notify_sync_successful),Toast.LENGTH_LONG).show();
                             curData.close();
                             // MODIFY PRESENT SYNC STATUS
                             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -201,15 +199,14 @@ public class FragmentSettingDefault extends Fragment{
                             editor.apply();
                             presentSyncStatus(sharedPreferences.getBoolean("isDataChange",false));
                         }else{
-                            Toast.makeText(getActivity().getApplicationContext(),"update lock user information fail",Toast.LENGTH_LONG).show();
+                            Toast.makeText(activity,getString(R.string.notify_report_app_admin),Toast.LENGTH_LONG).show();
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getActivity().getApplicationContext(),getString(R.string.notify_report_app_admin),Toast.LENGTH_LONG).show();
-                        Log.d("Error! Hunva", "onErrorResponse: "+error.toString());
+                        Toast.makeText(activity,getString(R.string.notify_report_app_admin),Toast.LENGTH_LONG).show();
                     }
                 }
         ){
@@ -230,10 +227,10 @@ public class FragmentSettingDefault extends Fragment{
 
     public void presentSyncStatus(boolean status){
         if (status){
-            btnSyncData.setImageResource(R.drawable.icons_data_not_synced);
+            btnSyncData.setImageResource(R.drawable.data_not_synced);
             textSyncStatus.setText(R.string.data_not_synced);
         }else{
-            btnSyncData.setImageResource(R.drawable.icons_data_synced);
+            btnSyncData.setImageResource(R.drawable.data_synced);
             textSyncStatus.setText(R.string.data_synced);
         }
     }

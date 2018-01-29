@@ -13,11 +13,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 import com.hunva.ranhatti.bksmartlock.R;
 import com.hunva.ranhatti.bksmartlock.activity.MainActivity;
 import com.hunva.ranhatti.bksmartlock.dataControl.OfflineDatabase;
@@ -83,13 +79,13 @@ public class FragmentMainDefault extends Fragment{
 
                 if (StatusLock.equals(getString(R.string.locked))) {
                     textStatusLock.setText(getString(R.string.unlocked));
-                    btnChangeStatusLock.setImageResource(R.drawable.icons_unlocked);
+                    btnChangeStatusLock.setImageResource(R.drawable.unlocked);
                     fireBaseDatabase.child("remote lock").child(String.valueOf(sharedPreferences.getInt("currentLock",0))).setValue(false);
 
                 }
                 else {
                     textStatusLock.setText(getString(R.string.locked));
-                    btnChangeStatusLock.setImageResource(R.drawable.icons_locked);
+                    btnChangeStatusLock.setImageResource(R.drawable.locked);
                     fireBaseDatabase.child("remote lock").child(String.valueOf(sharedPreferences.getInt("currentLock",0))).setValue(true);
                 }
             }

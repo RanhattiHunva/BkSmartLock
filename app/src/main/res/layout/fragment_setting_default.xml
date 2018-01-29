@@ -41,7 +41,7 @@
         android:id="@+id/textWfifStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:text="@string/disconnected"
         android:textColor="@color/colorText"
         android:textSize="12sp"
@@ -54,7 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:text="@string/data_synced"
         android:textColor="@color/colorText"
         android:textSize="12sp"
@@ -66,7 +66,7 @@
         android:id="@+id/textBluettothStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:text="@string/disconnected"
         android:textColor="@color/colorText"
         android:textSize="12sp"
@@ -78,28 +78,28 @@
         android:id="@+id/btnWifi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:background="@null"
         android:contentDescription="@string/none"
         app:layout_constraintEnd_toEndOf="@+id/textWifiAccess"
         app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="@+id/textWifiAccess"
         app:layout_constraintTop_toBottomOf="@+id/textWifiAccess"
-        app:srcCompat="@drawable/icons_wifi_off" />
+        app:srcCompat="@drawable/wifi_off" />
 
     <ImageButton
         android:id="@+id/btnBluetooth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:background="@null"
         android:contentDescription="@string/none"
         app:layout_constraintEnd_toEndOf="@+id/textBluetooth"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/textBluetooth"
         app:layout_constraintTop_toBottomOf="@+id/textBluetooth"
-        app:srcCompat="@drawable/icons_bluetooth_off" />
+        app:srcCompat="@drawable/bluetooth_off" />
 
     <TextView
         android:id="@+id/divider3"
@@ -137,12 +137,19 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:background="@null"
         android:contentDescription="@string/none"
         app:layout_constraintEnd_toStartOf="@+id/textBluetooth"
         app:layout_constraintStart_toEndOf="@+id/textWifiAccess"
         app:layout_constraintTop_toBottomOf="@+id/textBattery"
-        app:srcCompat="@drawable/icons_data_synced" />
+        app:srcCompat="@drawable/data_synced" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="94dp" />
 
 </android.support.constraint.ConstraintLayout>
