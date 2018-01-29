@@ -52,7 +52,6 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void register() {
-
         // PREFERENCES FOR THE VIEWS
         btnBack = findViewById(R.id.btnBack);
         btnSave = findViewById(R.id.btnSignUpSave);
@@ -69,7 +68,6 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void addEvent() {
-
         // ACTION WHEN CLICK ON BUTTON BACK
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,7 +103,7 @@ public class SignUpActivity extends AppCompatActivity {
                         Toast.makeText(SignUpActivity.this, getString(R.string.notify_empty_information), Toast.LENGTH_SHORT).show();
                     else{
                         if (passwords.equals(confirmPasswords)){
-                            insertUserInformation(urlInsertUserInformation);
+                            createNewUserInformation();
                         }else{
                             Toast.makeText(SignUpActivity.this, getString(R.string.notify_wrong_confirm_passwords), Toast.LENGTH_SHORT).show();
                         }
@@ -140,14 +138,49 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     // INSERT NEW USER INFORMATION TO SEVER
-    private void insertUserInformation(String url){
+    private void createNewUserInformation(){
         final RequestQueue requestQueue = Volley.newRequestQueue(this);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+
+        // ADD LOCK FOR NEW USER AFTER CREATED IT'S INFORMATION
+        final StringRequest addLockForNewUser = new StringRequest(Request.Method.POST, urlInsertUserLockInformation,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         if (response.equals("success")) {
-                            insertUserLockInformation(urlInsertUserLockInformation);
+                            Toast.makeText(SignUpActivity.this, getString(R.string.notify_sign_up_successful), Toast.LENGTH_SHORT).show();
+                            Intent moveToLogInActivity = new Intent(SignUpActivity.this, LogInActivity.class);
+                            startActivity(moveToLogInActivity);
+                            finish();
+                        }else{
+                            Toast.makeText(SignUpActivity.this, getString(R.string.notify_username_is_taken), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(SignUpActivity.this,getString(R.string.notify_report_app_admin),Toast.LENGTH_SHORT).show();
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> param = new HashMap<>();
+                // NEED TO MODIFY LATER
+                param.put("username",username);
+                param.put("lock1","1");
+                param.put("lock2","1");
+                param.put("lock3","1");
+                return param;
+            }
+        };
+
+        // ADD NEW INFORMATION TO ONLINE SQLite DATABASE
+        StringRequest createNewUser = new StringRequest(Request.Method.POST, urlInsertUserInformation,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if (response.equals("success")) {
+                            requestQueue.add(addLockForNewUser);
                         }else{
                             Toast.makeText(SignUpActivity.this, getString(R.string.notify_username_is_taken), Toast.LENGTH_SHORT).show();
                         }
@@ -173,43 +206,7 @@ public class SignUpActivity extends AppCompatActivity {
                 return param;
             }
         };
-        requestQueue.add(stringRequest);
-    }
-
-    // INSERT NEW USER LOCK RELATIONSHIP DATA TO SEVER
-    private void insertUserLockInformation(String url){
-        final RequestQueue requestQueue = Volley.newRequestQueue(this);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        if (response.equals("success")) {
-                            Toast.makeText(SignUpActivity.this, getString(R.string.notify_sign_up_successful), Toast.LENGTH_SHORT).show();
-                            Intent moveToLogInActivity = new Intent(SignUpActivity.this, LogInActivity.class);
-                            startActivity(moveToLogInActivity);
-                            finish();
-                        }else{
-                            Toast.makeText(SignUpActivity.this, getString(R.string.notify_username_is_taken), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(SignUpActivity.this,getString(R.string.notify_report_app_admin),Toast.LENGTH_SHORT).show();
-                    }
-                }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> param = new HashMap<>();
-                param.put("username",username);
-                param.put("lock1","1");
-                param.put("lock2","1");
-                param.put("lock3","1");
-                return param;
-            }
-        };
-        requestQueue.add(stringRequest);
+        requestQueue.add(createNewUser);
     }
 
     // CHECK THE INTERNET CONNECTION

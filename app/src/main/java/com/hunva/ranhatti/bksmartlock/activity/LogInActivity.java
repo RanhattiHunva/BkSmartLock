@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -112,7 +111,7 @@ public class LogInActivity extends AppCompatActivity {
                         Toast.makeText(LogInActivity.this, getString(R.string.notify_empty_information), Toast.LENGTH_SHORT).show();
                     } else {
                         // GET ALL USER INFORMATION AND MOVE TO MAIN ACTIVITY IF LOGIN SUCCESS FULL
-                        getUserInformation(urlGetUserInformation, username, passwords);
+                        checkUserInformation(username, passwords);
                     }
                 }else{
                     Toast.makeText(LogInActivity.this, getString(R.string.notify_no_internet), Toast.LENGTH_SHORT).show();
@@ -131,124 +130,12 @@ public class LogInActivity extends AppCompatActivity {
     }
 
     // SEARCH USER INFORMATION ON THE SERVE
-    private void getUserInformation(String url, final String username, final String passwords){
+    private void checkUserInformation(final String username, final String passwords){
         // USING VOLLEY LIBRARY TO QUEUE DATA FROM SEVER
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        Boolean flagLogInSuccessful = false;
-                        // LOAD ALL TABLE USER INFORMATION TO COMPARE. THIS PART NEED TO OPTIMIZE LATER
-                        JSONObject users;
-                        for (int i=0; i<response.length();i++){
-                            try {
-                                users = response.getJSONObject(i);
-                                if ((users.getString("username").equals(username))  && (users.getString("passwords").equals(passwords))){
-                                    flagLogInSuccessful = true;
+        final RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-                                    // SAVE DATA TO SQLite OFFLINE DATABASE.
-                                    database.QueryData("INSERT INTO user_information  VALUES" +
-                                            "("+users.getInt("id")+"," +
-                                            "'"+ username +"'," +
-                                            "'"+passwords+"'," +
-                                            "'"+users.getString("position")+"'," +
-                                            "'"+users.getString("department")+"'," +
-                                            "'"+users.getString("phoneNumber")+"'," +
-                                            "'"+users.getString("email")+"',"+
-                                            "'"+users.getString("fullName")+"',"+
-                                            "'"+users.getString("securityKey")+"')");
-
-                                    // GET DATA LOCK OF THE USER
-                                    getUserLockInformation(urlGetUserLockInformation, username);
-
-                                    // SAVE DATA TO SHARE PREFERENCES
-                                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                                    if (cbRememberPassword.isChecked()) {
-                                        editor.putString("account", username);
-                                        editor.putString("passwords",passwords);
-                                        editor.putBoolean("checkRemember",true);
-                                        editor.putBoolean("certificationLogIn", true);
-                                    }
-                                    else{
-                                        editor.putString("account", username);
-                                        editor.putString("passwords",passwords);
-                                        editor.putBoolean("checkRemember",false);
-                                        editor.putBoolean("certificationLogIn", true);
-                                    }
-                                    editor.putBoolean("isDataChange",false);
-                                    editor.apply();
-                                    break;
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-
-                        if (!flagLogInSuccessful){
-                            // NOTIFY IF INFORMATION IS WRONG
-                            Toast.makeText(LogInActivity.this, R.string.notify_wrong_information, Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // GET NOTIFY FOR SYSTEM ERROR, NEED ADD MORE ACTION.
-                        Toast.makeText(LogInActivity.this, "Error system, Please report this to admin!",Toast.LENGTH_SHORT).show();
-                    }
-                });
-        requestQueue.add(jsonArrayRequest);
-    }
-
-    private void getUserLockInformation(String url, final String username) {
-        RequestQueue requestQueue = Volley.newRequestQueue(LogInActivity.this);
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        // LOAD ALL TABLE USER INFORMATION TO COMPARE. THIS PART NEED TO OPTIMIZE LATER
-                        JSONObject usersLock;
-                        for (int i=0; i<response.length();i++){
-                            try {
-                                usersLock = response.getJSONObject(i);
-                                if (usersLock.getString("username").equals(username)){
-
-                                    Integer numColumn = usersLock.length();
-                                    userLockData = new Integer[numColumn-1];
-                                    String nameHandle;
-
-                                    for (int j = 0; j<=numColumn-1; j++){
-                                        nameHandle ="lock".concat(String.valueOf(j+1));
-                                        try {
-                                            userLockData[j]= usersLock.getInt(nameHandle);
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                    break;
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        // GET LOCK INFORMATION
-                        getLocksInformation(urlGetLocksInformation);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // GET NOTIFY FOR SYSTEM ERROR, NEED ADD MORE ACTION.
-                        Toast.makeText(LogInActivity.this, "Error system, Please report this to admin!",Toast.LENGTH_SHORT).show();
-                    }
-                });
-        requestQueue.add(jsonArrayRequest);
-    }
-
-    private void getLocksInformation(String url) {
-        RequestQueue requestQueue = Volley.newRequestQueue(LogInActivity.this);
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
+        // GET LOCK INFORMATION
+        final JsonArrayRequest getLockInformation = new JsonArrayRequest(Request.Method.GET, urlGetLocksInformation, null,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
@@ -290,7 +177,114 @@ public class LogInActivity extends AppCompatActivity {
                         Toast.makeText(LogInActivity.this, "Error system, Please report this to admin!",Toast.LENGTH_SHORT).show();
                     }
                 });
-        requestQueue.add(jsonArrayRequest);
+
+        // GET LOCK-USER RELATIONSHIP INFORMATION
+        final JsonArrayRequest getUserLockInformation = new JsonArrayRequest(Request.Method.GET, urlGetUserLockInformation, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        // LOAD ALL TABLE USER INFORMATION TO COMPARE. THIS PART NEED TO OPTIMIZE LATER
+                        JSONObject usersLock;
+                        for (int i=0; i<response.length();i++){
+                            try {
+                                usersLock = response.getJSONObject(i);
+                                if (usersLock.getString("username").equals(username)){
+
+                                    Integer numColumn = usersLock.length();
+                                    userLockData = new Integer[numColumn-1];
+                                    String nameHandle;
+
+                                    for (int j = 0; j<=numColumn-1; j++){
+                                        nameHandle ="lock".concat(String.valueOf(j+1));
+                                        try {
+                                            userLockData[j]= usersLock.getInt(nameHandle);
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                    break;
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        // GET LOCK INFORMATION
+                        requestQueue.add(getLockInformation);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // GET NOTIFY FOR SYSTEM ERROR, NEED ADD MORE ACTION.
+                        Toast.makeText(LogInActivity.this, "Error system, Please report this to admin!",Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        // CHECKING AND ADD USER INFORMATION TO OFFLINE DATABASE FROM ONLINE DATABASE
+        JsonArrayRequest checkUserInformation = new JsonArrayRequest(Request.Method.GET, urlGetUserInformation, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Boolean flagLogInSuccessful = false;
+                        // LOAD ALL TABLE USER INFORMATION TO COMPARE. THIS PART NEED TO OPTIMIZE LATER
+                        JSONObject users;
+                        for (int i=0; i<response.length();i++){
+                            try {
+                                users = response.getJSONObject(i);
+                                if ((users.getString("username").equals(username))  && (users.getString("passwords").equals(passwords))){
+                                    flagLogInSuccessful = true;
+
+                                    // SAVE DATA TO SQLite OFFLINE DATABASE.
+                                    database.QueryData("INSERT INTO user_information  VALUES" +
+                                            "("+users.getInt("id")+"," +
+                                            "'"+ username +"'," +
+                                            "'"+passwords+"'," +
+                                            "'"+users.getString("position")+"'," +
+                                            "'"+users.getString("department")+"'," +
+                                            "'"+users.getString("phoneNumber")+"'," +
+                                            "'"+users.getString("email")+"',"+
+                                            "'"+users.getString("fullName")+"',"+
+                                            "'"+users.getString("securityKey")+"')");
+
+                                    // GET DATA LOCK OF THE USER
+                                    requestQueue.add(getUserLockInformation);
+
+                                    // SAVE DATA TO SHARE PREFERENCES
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    if (cbRememberPassword.isChecked()) {
+                                        editor.putString("account", username);
+                                        editor.putString("passwords",passwords);
+                                        editor.putBoolean("checkRemember",true);
+                                        editor.putBoolean("certificationLogIn", true);
+                                    }
+                                    else{
+                                        editor.putString("account", username);
+                                        editor.putString("passwords",passwords);
+                                        editor.putBoolean("checkRemember",false);
+                                        editor.putBoolean("certificationLogIn", true);
+                                    }
+                                    editor.putBoolean("isDataChange",false);
+                                    editor.apply();
+                                    break;
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        if (!flagLogInSuccessful){
+                            // NOTIFY IF INFORMATION IS WRONG
+                            Toast.makeText(LogInActivity.this, R.string.notify_wrong_information, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // GET NOTIFY FOR SYSTEM ERROR, NEED ADD MORE ACTION.
+                        Toast.makeText(LogInActivity.this, "Error system, Please report this to admin!",Toast.LENGTH_SHORT).show();
+                    }
+                });
+        requestQueue.add(checkUserInformation);
     }
 
     // CHECK THE INTERNET CONNECTION
