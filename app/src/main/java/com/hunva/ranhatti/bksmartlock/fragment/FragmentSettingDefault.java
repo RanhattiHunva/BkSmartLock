@@ -116,8 +116,7 @@ public class FragmentSettingDefault extends Fragment{
                 // CHECK INTERNET CONNECTION
                 if ( activity.isInternetOnline() ) {
                     // UPDATE DATABASE TO SEVER
-                    Cursor curData = database.GetData("SELECT * FROM user_information");
-                    updateUserInformation(urlUpdateUserInformation, curData);
+                    updateUserInformation();
                 }else{
                     Toast.makeText(activity, getString(R.string.notify_no_internet), Toast.LENGTH_LONG).show();
                 }
@@ -142,57 +141,22 @@ public class FragmentSettingDefault extends Fragment{
     }
 
     // UPDATE USER INFORMATION TO SEVER
-    private void updateUserInformation(String url, final Cursor curData){
-        curData.moveToFirst();
+    private void updateUserInformation(){
         final RequestQueue requestQueue = Volley.newRequestQueue(activity);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        if (response.trim().equals("success")){
-                            // UPDATE USER LOCK RELATIONSHIP INFORMATION
-                            Cursor curDataLock = database.GetData("SELECT * FROM lock_information");
-                            updateUserLockInformation(urlUpdateUserLockInformation,curDataLock,curData.getString(1));
-                            curData.close();
-                        }else{
-                            Toast.makeText(activity,getString(R.string.notify_report_app_admin),Toast.LENGTH_LONG).show();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(activity,getString(R.string.notify_report_app_admin),Toast.LENGTH_SHORT).show();
-                    }
-                }
-        ){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> param = new HashMap<>();
-                param.put("id",String.valueOf(curData.getInt(0)));
-                param.put("fullName",curData.getString(7));
-                param.put("passwords",curData.getString(2));
-                param.put("position",curData.getString(3));
-                param.put("department",curData.getString(4));
-                param.put("phoneNumber",curData.getString(5));
-                param.put("email",curData.getString(6));
-                param.put("securityKey",curData.getString(8));
-                return param;
-            }
-        };
-        requestQueue.add(stringRequest);
-    }
 
-    // UPDATE LOCK USER RELATIONSHIP TO SEVER
-    private void updateUserLockInformation(String url, final Cursor curData, final String username){
-        final RequestQueue requestQueue = Volley.newRequestQueue(activity);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+        final Cursor curUserData = database.GetData("SELECT * FROM user_information");
+        curUserData.moveToFirst();
+
+        final Cursor curLockData = database.GetData("SELECT * FROM lock_information");
+
+        final StringRequest updateLockPermissionIndex = new StringRequest(Request.Method.POST, urlUpdateUserLockInformation,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         if (response.trim().equals("success")){
                             Toast.makeText(activity,getString(R.string.notify_sync_successful),Toast.LENGTH_LONG).show();
-                            curData.close();
+                            curUserData.close();
+                            curLockData.close();
                             // MODIFY PRESENT SYNC STATUS
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.putBoolean("isDataChange", false);
@@ -213,16 +177,48 @@ public class FragmentSettingDefault extends Fragment{
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> param = new HashMap<>();
-                param.put("username",String.valueOf(username));
-                String tagHandle;
-                while (curData.moveToNext()) {
-                    tagHandle = "lock".concat(String.valueOf(curData.getInt(0)));
-                    param.put(tagHandle, String.valueOf(curData.getInt(3)));
+                param.put("username",String.valueOf(curUserData.getString(1)));
+                while (curLockData.moveToNext()) {
+                    param.put("BKSL_"+String.valueOf(curLockData.getInt(0)),String.valueOf(curLockData.getInt(3)));
                 }
                 return param;
             }
         };
-        requestQueue.add(stringRequest);
+
+        StringRequest updateUserInformation = new StringRequest(Request.Method.POST, urlUpdateUserInformation,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if (response.trim().equals("success")){
+                            // UPDATE USER LOCK RELATIONSHIP INFORMATION
+                            requestQueue.add(updateLockPermissionIndex);
+                        }else{
+                            Toast.makeText(activity,getString(R.string.notify_report_app_admin),Toast.LENGTH_LONG).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(activity,getString(R.string.notify_report_app_admin),Toast.LENGTH_SHORT).show();
+                    }
+                }
+        ){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> param = new HashMap<>();
+                param.put("id",String.valueOf(curUserData.getInt(0)));
+                param.put("fullName", curUserData.getString(7));
+                param.put("passwords", curUserData.getString(2));
+                param.put("position", curUserData.getString(3));
+                param.put("department", curUserData.getString(4));
+                param.put("phoneNumber", curUserData.getString(5));
+                param.put("email", curUserData.getString(6));
+                param.put("securityKey", curUserData.getString(8));
+                return param;
+            }
+        };
+        requestQueue.add(updateUserInformation);
     }
 
     public void presentSyncStatus(boolean status){

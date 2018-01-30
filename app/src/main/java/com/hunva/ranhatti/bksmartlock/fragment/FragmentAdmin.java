@@ -121,37 +121,40 @@ public class FragmentAdmin extends Fragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // SPLIT RESPONSE TO USABLE ARRAY DATA
-                        String[] row = response.split("\\|");
+                        if(!response.equals("false")) {
+                            // SPLIT RESPONSE TO USABLE ARRAY DATA
+                            String[] row = response.split("\\|");
 
-                        Integer numRow = row.length;
-                        Integer numColumn = row[0].split(",").length;
-                        String[][] arrayData= new String[numRow][numColumn];
+                            Integer numRow = row.length;
+                            Integer numColumn = row[0].split(",").length;
+                            String[][] arrayData = new String[numRow][numColumn];
 
-                        for (int i=0; i<numRow; i++) {
-                            String[] data = row[i].split(",");
-                            System.arraycopy(data, 0, arrayData[i], 0, data.length);
-                        }
-
-                        // INSERT HISTORY DATA TO LIST VIEWS
-                        String oldDate = arrayData[numRow-1][0].split(" ")[0];
-                        for (int i=numRow-1; i>=0; i--){
-                            String[] datetime =  arrayData[i][0].split(" ");
-                            String date = datetime[0];
-                            String time = datetime[1];
-
-                            if ((i==numRow-1) || (!date.equals(oldDate))){
-                                oldDate = date;
-                                listLockHistory.add(new LockHistoryPresent("--:--:--",date, R.drawable.new_date));
+                            for (int rowIndex = 0; rowIndex < numRow; rowIndex++) {
+                                String[] data = row[rowIndex].split(",");
+                                System.arraycopy(data, 0, arrayData[rowIndex], 0, data.length);
                             }
-                            if (Integer.parseInt(arrayData[i][2]) == 0){
-                                listLockHistory.add(new LockHistoryPresent(time,arrayData[i][1],R.drawable.history_unlocked));
-                            }else{
-                                listLockHistory.add(new LockHistoryPresent(time,arrayData[i][1],R.drawable.history_unlocked_by_internet));
-                            }
-                        }
-                        lockHistoryAdapter.notifyDataSetChanged();
 
+                            // INSERT HISTORY DATA TO LIST VIEWS
+                            String oldDate = arrayData[numRow - 1][0].split(" ")[0];
+                            for (int rowIndex = numRow - 1; rowIndex >= 0; rowIndex--) {
+                                String[] datetime = arrayData[rowIndex][0].split(" ");
+                                String date = datetime[0];
+                                String time = datetime[1];
+
+                                if ((rowIndex == numRow - 1) || (!date.equals(oldDate))) {
+                                    oldDate = date;
+                                    listLockHistory.add(new LockHistoryPresent("--:--:--", date, R.drawable.new_date));
+                                }
+                                if (Integer.parseInt(arrayData[rowIndex][2]) == 0) {
+                                    listLockHistory.add(new LockHistoryPresent(time, arrayData[rowIndex][1], R.drawable.history_unlocked));
+                                } else {
+                                    listLockHistory.add(new LockHistoryPresent(time, arrayData[rowIndex][1], R.drawable.history_unlocked_by_internet));
+                                }
+                            }
+                            lockHistoryAdapter.notifyDataSetChanged();
+                        }else{
+                            Toast.makeText(activity,getString(R.string.notify_report_app_admin),Toast.LENGTH_SHORT).show();
+                        }
                     }
                 },
                 new Response.ErrorListener() {

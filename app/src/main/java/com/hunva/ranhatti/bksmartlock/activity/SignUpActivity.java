@@ -167,9 +167,9 @@ public class SignUpActivity extends AppCompatActivity {
                 Map<String,String> param = new HashMap<>();
                 // NEED TO MODIFY LATER
                 param.put("username",username);
-                param.put("lock1","1");
-                param.put("lock2","1");
-                param.put("lock3","1");
+                param.put("BKSL_1","1");
+                param.put("BKSL_2","1");
+                param.put("BKSL_3","1");
                 return param;
             }
         };

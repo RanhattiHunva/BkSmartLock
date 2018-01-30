@@ -13,11 +13,13 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.hunva.ranhatti.bksmartlock.R;
 import com.hunva.ranhatti.bksmartlock.dataControl.OfflineDatabase;
@@ -26,6 +28,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class LogInActivity extends AppCompatActivity {
 
     // DEFINE GLOBAL VARIABLE
@@ -33,17 +38,17 @@ public class LogInActivity extends AppCompatActivity {
     Button btnLogIn, btnSignUp;
     CheckBox cbRememberPassword;
 
-    Integer[] userLockData; // TO SAVE USER_LOCK RELATIONSHIP DATA
-
     SharedPreferences sharedPreferences;
 
     OfflineDatabase database;
+
+    Integer[] lockPermissionIndex; // TO SAVE USER_LOCK RELATIONSHIP DATA
 
 //    final String urlGetUserInformation = "https://bksmartlock.000webhostapp.com/getUserData.php";
 //    final String urlGetUserLockInformation = "https://bksmartlock.000webhostapp.com/getUserLockData.php";
 //    final String urlGetLocksInformation = "https://bksmartlock.000webhostapp.com/getLockData.php";
 
-    final String urlGetUserInformation = "http://192.168.56.1:8012/bksmartlock/getUserData.php";
+    final String urlGetUserInformation = "http://192.168.56.1:8012/bksmartlock/searchUserData.php";
     final String urlGetUserLockInformation = "http://192.168.56.1:8012/bksmartlock/getUserLockData.php";
     final String urlGetLocksInformation = "http://192.168.56.1:8012/bksmartlock/getLockData.php";
 
@@ -142,19 +147,19 @@ public class LogInActivity extends AppCompatActivity {
                         // LOAD ALL TABLE USER INFORMATION TO COMPARE. THIS PART NEED TO OPTIMIZE LATER
                         JSONObject lock; Boolean flagFirstData = true;
                         for (int i=0; i<response.length();i++){
-                            if (userLockData[i]>0) {
+                            if (lockPermissionIndex[i]>0) {
                                 try {
                                     lock = response.getJSONObject(i);
                                     database.QueryData("INSERT INTO lock_information  VALUES" +
                                             "("+lock.getInt("id")+"," +
                                             "'"+lock.getString("name")+"'," +
                                             "'"+lock.getString("location")+"'," +
-                                            " "+userLockData[i]+")");
+                                            " "+ lockPermissionIndex[i]+")");
 
                                     if (flagFirstData){
-                                        SharedPreferences.Editor editor2 = sharedPreferences.edit();
-                                        editor2.putInt("currentLock",lock.getInt("id"));
-                                        editor2.apply();
+                                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                                        editor.putInt("currentLock",lock.getInt("id"));
+                                        editor.apply();
                                         flagFirstData = false;
                                     }
                                 } catch (JSONException e) {
@@ -162,6 +167,23 @@ public class LogInActivity extends AppCompatActivity {
                                 }
                             }
                         }
+
+                        // SAVE DATA TO SHARE PREFERENCES
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        if (cbRememberPassword.isChecked()) {
+                            editor.putString("account", username);
+                            editor.putString("passwords",passwords);
+                            editor.putBoolean("checkRemember",true);
+                            editor.putBoolean("certificationLogIn", true);
+                        }
+                        else{
+                            editor.putString("account", username);
+                            editor.putString("passwords",passwords);
+                            editor.putBoolean("checkRemember",false);
+                            editor.putBoolean("certificationLogIn", true);
+                        }
+                        editor.putBoolean("isDataChange",false);
+                        editor.apply();
 
                         // TOAST NOTIFY THAT LOG IN SUCCESSFUL AND MOVE BACK TO MAIN ACTIVITY
                         Toast.makeText(LogInActivity.this, R.string.notify_access, Toast.LENGTH_SHORT).show();
@@ -178,35 +200,20 @@ public class LogInActivity extends AppCompatActivity {
                     }
                 });
 
-        // GET LOCK-USER RELATIONSHIP INFORMATION
-        final JsonArrayRequest getUserLockInformation = new JsonArrayRequest(Request.Method.GET, urlGetUserLockInformation, null,
-                new Response.Listener<JSONArray>() {
+        // GET LOCK-USER getUserLockInformation INFORMATION
+        final StringRequest getUserLockInformation = new StringRequest(Request.Method.POST, urlGetUserLockInformation,
+                new Response.Listener<String>() {
                     @Override
-                    public void onResponse(JSONArray response) {
-                        // LOAD ALL TABLE USER INFORMATION TO COMPARE. THIS PART NEED TO OPTIMIZE LATER
-                        JSONObject usersLock;
-                        for (int i=0; i<response.length();i++){
-                            try {
-                                usersLock = response.getJSONObject(i);
-                                if (usersLock.getString("username").equals(username)){
-
-                                    Integer numColumn = usersLock.length();
-                                    userLockData = new Integer[numColumn-1];
-                                    String nameHandle;
-
-                                    for (int j = 0; j<=numColumn-1; j++){
-                                        nameHandle ="lock".concat(String.valueOf(j+1));
-                                        try {
-                                            userLockData[j]= usersLock.getInt(nameHandle);
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                    break;
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                    public void onResponse(String response) {
+                        if (!response.equals("false")){
+                            String[][] arrayData = splitResponse(response);
+                            Integer rowIndex = 0;
+                            lockPermissionIndex = new Integer[arrayData[rowIndex].length];
+                            for (int colIndex=0; colIndex<arrayData[rowIndex].length;colIndex++){
+                                lockPermissionIndex[colIndex]=Integer.parseInt(arrayData[rowIndex][colIndex]);
                             }
+                        }else{
+                            Toast.makeText(LogInActivity.this,getString(R.string.notify_report_app_admin),Toast.LENGTH_SHORT).show();
                         }
                         // GET LOCK INFORMATION
                         requestQueue.add(getLockInformation);
@@ -215,85 +222,83 @@ public class LogInActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // GET NOTIFY FOR SYSTEM ERROR, NEED ADD MORE ACTION.
-                        Toast.makeText(LogInActivity.this, "Error system, Please report this to admin!",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LogInActivity.this,getString(R.string.notify_report_app_admin),Toast.LENGTH_SHORT).show();
                     }
-                });
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> param = new HashMap<>();
+                param.put("username",username);
+                return param;
+            }
+        };
 
         // CHECKING AND ADD USER INFORMATION TO OFFLINE DATABASE FROM ONLINE DATABASE
-        JsonArrayRequest checkUserInformation = new JsonArrayRequest(Request.Method.GET, urlGetUserInformation, null,
-                new Response.Listener<JSONArray>() {
+        StringRequest checkUserInformation = new StringRequest(Request.Method.POST, urlGetUserInformation,
+                new Response.Listener<String>() {
                     @Override
-                    public void onResponse(JSONArray response) {
-                        Boolean flagLogInSuccessful = false;
-                        // LOAD ALL TABLE USER INFORMATION TO COMPARE. THIS PART NEED TO OPTIMIZE LATER
-                        JSONObject users;
-                        for (int i=0; i<response.length();i++){
-                            try {
-                                users = response.getJSONObject(i);
-                                if ((users.getString("username").equals(username))  && (users.getString("passwords").equals(passwords))){
-                                    flagLogInSuccessful = true;
-
-                                    // SAVE DATA TO SQLite OFFLINE DATABASE.
-                                    database.QueryData("INSERT INTO user_information  VALUES" +
-                                            "("+users.getInt("id")+"," +
-                                            "'"+ username +"'," +
-                                            "'"+passwords+"'," +
-                                            "'"+users.getString("position")+"'," +
-                                            "'"+users.getString("department")+"'," +
-                                            "'"+users.getString("phoneNumber")+"'," +
-                                            "'"+users.getString("email")+"',"+
-                                            "'"+users.getString("fullName")+"',"+
-                                            "'"+users.getString("securityKey")+"')");
-
-                                    // GET DATA LOCK OF THE USER
-                                    requestQueue.add(getUserLockInformation);
-
-                                    // SAVE DATA TO SHARE PREFERENCES
-                                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                                    if (cbRememberPassword.isChecked()) {
-                                        editor.putString("account", username);
-                                        editor.putString("passwords",passwords);
-                                        editor.putBoolean("checkRemember",true);
-                                        editor.putBoolean("certificationLogIn", true);
-                                    }
-                                    else{
-                                        editor.putString("account", username);
-                                        editor.putString("passwords",passwords);
-                                        editor.putBoolean("checkRemember",false);
-                                        editor.putBoolean("certificationLogIn", true);
-                                    }
-                                    editor.putBoolean("isDataChange",false);
-                                    editor.apply();
-                                    break;
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                    public void onResponse(String response) {
+                        if (!response.equals("false")){
+                            String[][] arrayData = splitResponse(response);
+                            Integer rowIndex = 0;
+                            // SAVE DATA TO SQLite OFFLINE DATABASE.
+                            database.QueryData("INSERT INTO user_information  VALUES" +
+                                    "("+Integer.parseInt(arrayData[rowIndex][0])+"," +
+                                    "'"+arrayData[rowIndex][1]+"'," +
+                                    "'"+arrayData[rowIndex][3]+"'," +
+                                    "'"+arrayData[rowIndex][4]+"'," +
+                                    "'"+arrayData[rowIndex][5]+"'," +
+                                    "'"+arrayData[rowIndex][6]+"'," +
+                                    "'"+arrayData[rowIndex][7]+"',"+
+                                    "'"+arrayData[rowIndex][2]+"',"+
+                                    "'"+arrayData[rowIndex][8]+"')");
+                            // GET DATA LOCK OF THE USER
+                            requestQueue.add(getUserLockInformation);
+                        }else{
+                            Toast.makeText(LogInActivity.this,getString(R.string.notify_report_app_admin),Toast.LENGTH_SHORT).show();
                         }
-                        if (!flagLogInSuccessful){
-                            // NOTIFY IF INFORMATION IS WRONG
-                            Toast.makeText(LogInActivity.this, R.string.notify_wrong_information, Toast.LENGTH_SHORT).show();
-                        }
+
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // GET NOTIFY FOR SYSTEM ERROR, NEED ADD MORE ACTION.
-                        Toast.makeText(LogInActivity.this, "Error system, Please report this to admin!",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LogInActivity.this,getString(R.string.notify_report_app_admin),Toast.LENGTH_SHORT).show();
                     }
-                });
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> param = new HashMap<>();
+                param.put("username",username);
+                param.put("passwords",passwords);
+                return param;
+            }
+        };
         requestQueue.add(checkUserInformation);
     }
 
     // CHECK THE INTERNET CONNECTION
-    public boolean isInternetOnline(){
+    private boolean isInternetOnline(){
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = null;
         if (connectivityManager != null) {
             netInfo = connectivityManager.getActiveNetworkInfo();
         }
         return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
+
+    // SPLIT RESPONSE TO USABLE ARRAY DATA
+    private String[][] splitResponse(String response){
+        String[] row = response.split("\\|");
+
+        Integer numRow = row.length;
+        Integer numColumn = row[0].split(",").length;
+        String[][] arrayData = new String[numRow][numColumn];
+
+        for (int i = 0; i < numRow; i++) {
+            String[] data = row[i].split(",");
+            System.arraycopy(data, 0, arrayData[i], 0, data.length);
+        }
+        return arrayData;
     }
 }
