@@ -9,9 +9,11 @@ import com.hunva.ranhatti.bksmartlock.R;
 
 public class GuestPresent {
     private String name;
+    private int accessPermission;
 
-    public GuestPresent(String name) {
+    public GuestPresent(String name, int accessPermission) {
         this.name = name;
+        this.accessPermission = accessPermission;
     }
 
     public String getName() {
@@ -22,7 +24,11 @@ public class GuestPresent {
         this.name = name;
     }
 
-    public Integer getArrow() {
-        return R.drawable.arrow_right;
+    public int getAccessPermission() {
+        return accessPermission;
+    }
+
+    public void setAccessPermission(int accessPermission) {
+        this.accessPermission = accessPermission;
     }
 }

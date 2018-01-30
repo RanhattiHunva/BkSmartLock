@@ -166,6 +166,7 @@ public class SignUpActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> param = new HashMap<>();
                 // NEED TO MODIFY LATER
+                param.put("fullName",fullName);
                 param.put("username",username);
                 param.put("BKSL_1","1");
                 param.put("BKSL_2","1");

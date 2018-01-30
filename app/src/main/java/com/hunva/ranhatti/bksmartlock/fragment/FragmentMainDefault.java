@@ -107,8 +107,12 @@ public class FragmentMainDefault extends Fragment{
                 curData.moveToFirst();
 
                 if (curData.getInt(3)>=3) {
-                    activity.changeMainActivityFragment("admin");
-                    curData.close();
+                    if (activity.isInternetOnline()) {
+                        activity.changeMainActivityFragment("admin");
+                        curData.close();
+                    }else{
+                        Toast.makeText(activity, getString(R.string.notify_need_internet_admin),Toast.LENGTH_SHORT).show();
+                    }
                 }
                 else {
                     Toast.makeText(activity,getString(R.string.deny_access_admin),Toast.LENGTH_SHORT).show();

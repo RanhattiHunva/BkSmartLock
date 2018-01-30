@@ -67,7 +67,7 @@ public class GuestAdapter extends BaseAdapter{
 
         GuestPresent guestPresent = guestPresentsList.get(i);
         holder.userName.setText(guestPresent.getName());
-        holder.image.setImageResource(guestPresent.getArrow());
+        holder.image.setImageResource(guestPresent.getAccessPermission());
 
         return view;
     }

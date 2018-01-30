@@ -44,11 +44,11 @@ public class LogInActivity extends AppCompatActivity {
 
     Integer[] lockPermissionIndex; // TO SAVE USER_LOCK RELATIONSHIP DATA
 
-//    final String urlGetUserInformation = "https://bksmartlock.000webhostapp.com/getUserData.php";
+//    final String urlCheckUserInformation = "https://bksmartlock.000webhostapp.com/getUserData.php";
 //    final String urlGetAccessPermission = "https://bksmartlock.000webhostapp.com/getUserLockData.php";
 //    final String urlGetLocksInformation = "https://bksmartlock.000webhostapp.com/getLockData.php";
 
-    final String urlGetUserInformation = "http://192.168.56.1:8012/bksmartlock/searchUserInformation.php";
+    final String urlCheckUserInformation = "http://192.168.56.1:8012/bksmartlock/searchUserInformation.php";
     final String urlGetAccessPermission = "http://192.168.56.1:8012/bksmartlock/getAccessPermission.php";
     final String urlGetLocksInformation = "http://192.168.56.1:8012/bksmartlock/getLockInformation.php";
 
@@ -200,8 +200,8 @@ public class LogInActivity extends AppCompatActivity {
                     }
                 });
 
-        // GET LOCK-USER getUserLockInformation INFORMATION
-        final StringRequest getUserLockInformation = new StringRequest(Request.Method.POST, urlGetAccessPermission,
+        // GET LOCK-USER getAccessPermission INFORMATION
+        final StringRequest getAccessPermission = new StringRequest(Request.Method.POST, urlGetAccessPermission,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -234,7 +234,7 @@ public class LogInActivity extends AppCompatActivity {
         };
 
         // CHECKING AND ADD USER INFORMATION TO OFFLINE DATABASE FROM ONLINE DATABASE
-        StringRequest checkUserInformation = new StringRequest(Request.Method.POST, urlGetUserInformation,
+        StringRequest checkUserInformation = new StringRequest(Request.Method.POST, urlCheckUserInformation,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -253,11 +253,10 @@ public class LogInActivity extends AppCompatActivity {
                                     "'"+arrayData[rowIndex][7]+"',"+
                                     "'"+arrayData[rowIndex][8]+"')");
                             // GET DATA LOCK OF THE USER
-                            requestQueue.add(getUserLockInformation);
+                            requestQueue.add(getAccessPermission);
                         }else{
                             Toast.makeText(LogInActivity.this,getString(R.string.notify_report_app_admin),Toast.LENGTH_SHORT).show();
                         }
-
                     }
                 },
                 new Response.ErrorListener() {
