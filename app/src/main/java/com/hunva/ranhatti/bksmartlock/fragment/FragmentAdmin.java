@@ -20,9 +20,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.hunva.ranhatti.bksmartlock.R;
 import com.hunva.ranhatti.bksmartlock.activity.MainActivity;
-import com.hunva.ranhatti.bksmartlock.arrayView.GuestInforAdapter;
+import com.hunva.ranhatti.bksmartlock.arrayView.GuestAdapter;
 import com.hunva.ranhatti.bksmartlock.arrayView.LockHistoryAdapter;
-import com.hunva.ranhatti.bksmartlock.dataControl.GuestInforPresent;
+import com.hunva.ranhatti.bksmartlock.dataControl.GuestPresent;
 import com.hunva.ranhatti.bksmartlock.dataControl.LockHistoryPresent;
 import com.hunva.ranhatti.bksmartlock.dataControl.OfflineDatabase;
 
@@ -40,9 +40,9 @@ public class FragmentAdmin extends Fragment {
     // DEFINE GLOBAL VARIABLE
     ListView lvLockHistory, lvGuest;
     ArrayList<LockHistoryPresent> listLockHistory;
-    ArrayList<GuestInforPresent> listGuest;
+    ArrayList<GuestPresent> listGuest;
     LockHistoryAdapter lockHistoryAdapter;
-    GuestInforAdapter guestInforAdapter;
+    GuestAdapter guestAdapter;
 
     MainActivity activity;
 
@@ -50,7 +50,7 @@ public class FragmentAdmin extends Fragment {
 
     SharedPreferences sharedPreferences;
 
-    final String urlGetlockHistory = "http://192.168.56.1:8012/bksmartlock/getLockHistory.php";
+    final String urlGetLockHistory = "http://192.168.56.1:8012/bksmartlock/getLockHistory.php";
 
     @Nullable
     @Override
@@ -95,23 +95,23 @@ public class FragmentAdmin extends Fragment {
 
         lvGuest = view.findViewById(R.id.lvGuest);
         listGuest = new ArrayList<>();
-        guestInforAdapter = new GuestInforAdapter(activity, R.layout.element_guest_present, listGuest);
-        lvGuest.setAdapter(guestInforAdapter);
+        guestAdapter = new GuestAdapter(activity, R.layout.element_guest_present, listGuest);
+        lvGuest.setAdapter(guestAdapter);
 
         // CHECKING INTERNET CONNECTION
         if (!activity.isInternetOnline()){
             Toast.makeText(activity,getString(R.string.notify_no_internet), Toast.LENGTH_SHORT).show();
         }else{
             // INITIALIZE THE DATA FOR HISTORY TAB HOST
-            getLockHistory(urlGetlockHistory, sharedPreferences.getInt("currentLock", 0));
+            getLockHistory(urlGetLockHistory, sharedPreferences.getInt("currentLock", 0));
             lockHistoryAdapter.notifyDataSetChanged();
 
-            listGuest.add(new GuestInforPresent("Trần Thái Anh Vũ"));
-            listGuest.add(new GuestInforPresent("Nguyen Van Long"));
-            listGuest.add(new GuestInforPresent("Thai Thuy Van"));
-            listGuest.add(new GuestInforPresent("Thai Thuy Dung"));
-            listGuest.add(new GuestInforPresent("Thai N"));
-            guestInforAdapter.notifyDataSetChanged();
+            listGuest.add(new GuestPresent("Trần Thái Anh Vũ"));
+            listGuest.add(new GuestPresent("Nguyen Van Long"));
+            listGuest.add(new GuestPresent("Thai Thuy Van"));
+            listGuest.add(new GuestPresent("Thai Thuy Dung"));
+            listGuest.add(new GuestPresent("Thai N"));
+            guestAdapter.notifyDataSetChanged();
         }
     }
 

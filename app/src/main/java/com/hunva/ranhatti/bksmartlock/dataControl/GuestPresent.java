@@ -7,10 +7,10 @@ import com.hunva.ranhatti.bksmartlock.R;
  *
  */
 
-public class GuestInforPresent {
+public class GuestPresent {
     private String name;
 
-    public GuestInforPresent(String name) {
+    public GuestPresent(String name) {
         this.name = name;
     }
 

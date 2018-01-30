@@ -36,11 +36,11 @@ public class SignUpActivity extends AppCompatActivity {
 
     String username, fullName, passwords, confirmPasswords, position, department, phoneNumber, email;
 
-//    final String urlInsertUserInformation = "https://bksmartlock.000webhostapp.com/insertUserData.php";
-//    final String urlInsertUserLockInformation = "https://bksmartlock.000webhostapp.com/insertUserLockData.php";
+//    final String urlInsertNewUser = "https://bksmartlock.000webhostapp.com/insertUserData.php";
+//    final String urlInsertNewAccessPermission = "https://bksmartlock.000webhostapp.com/insertUserLockData.php";
 
-    final String urlInsertUserInformation = "http://192.168.56.1:8012/bksmartlock/insertUserData.php";
-    final String urlInsertUserLockInformation = "http://192.168.56.1:8012/bksmartlock/insertUserLockData.php";
+    final String urlInsertNewUser = "http://192.168.56.1:8012/bksmartlock/insertNewUser.php";
+    final String urlInsertNewAccessPermission = "http://192.168.56.1:8012/bksmartlock/insertNewAccessPermission.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,7 +142,7 @@ public class SignUpActivity extends AppCompatActivity {
         final RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         // ADD LOCK FOR NEW USER AFTER CREATED IT'S INFORMATION
-        final StringRequest addLockForNewUser = new StringRequest(Request.Method.POST, urlInsertUserLockInformation,
+        final StringRequest addLockForNewUser = new StringRequest(Request.Method.POST, urlInsertNewAccessPermission,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -175,7 +175,7 @@ public class SignUpActivity extends AppCompatActivity {
         };
 
         // ADD NEW INFORMATION TO ONLINE SQLite DATABASE
-        StringRequest createNewUser = new StringRequest(Request.Method.POST, urlInsertUserInformation,
+        StringRequest createNewUser = new StringRequest(Request.Method.POST, urlInsertNewUser,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

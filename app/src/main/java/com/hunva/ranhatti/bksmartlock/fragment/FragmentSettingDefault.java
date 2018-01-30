@@ -52,10 +52,10 @@ public class FragmentSettingDefault extends Fragment{
     MainActivity activity;
 
 //    String urlUpdateUserInformation = "https://bksmartlock.000webhostapp.com/updateUserData.php";
-//    String urlUpdateUserLockInformation = "https://bksmartlock.000webhostapp.com/updateUserLockData.php";
+//    String urlUpdateAccessPermission = "https://bksmartlock.000webhostapp.com/updateUserLockData.php";
 
-    final String urlUpdateUserInformation = "http://192.168.56.1:8012/bksmartlock/updateUserData.php";
-    final String urlUpdateUserLockInformation = "http://192.168.56.1:8012/bksmartlock/updateUserLockData.php";
+    final String urlUpdateUserInformation = "http://192.168.56.1:8012/bksmartlock/updateUserInformation.php";
+    final String urlUpdateAccessPermission = "http://192.168.56.1:8012/bksmartlock/updateAccessPermission.php";
 
     @Nullable
     @Override
@@ -149,7 +149,7 @@ public class FragmentSettingDefault extends Fragment{
 
         final Cursor curLockData = database.GetData("SELECT * FROM lock_information");
 
-        final StringRequest updateLockPermissionIndex = new StringRequest(Request.Method.POST, urlUpdateUserLockInformation,
+        final StringRequest updateLockPermissionIndex = new StringRequest(Request.Method.POST, urlUpdateAccessPermission,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

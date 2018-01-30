@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hunva.ranhatti.bksmartlock.R;
-import com.hunva.ranhatti.bksmartlock.dataControl.GuestInforPresent;
+import com.hunva.ranhatti.bksmartlock.dataControl.GuestPresent;
 
 import java.util.List;
 
@@ -18,20 +18,20 @@ import java.util.List;
  *
  */
 
-public class GuestInforAdapter extends BaseAdapter{
+public class GuestAdapter extends BaseAdapter{
     private Context context;
     private int layout;
-    private List<GuestInforPresent> guestInforPresentsList;
+    private List<GuestPresent> guestPresentsList;
 
-    public GuestInforAdapter(Context context, int layout, List<GuestInforPresent> guestInforPresents) {
+    public GuestAdapter(Context context, int layout, List<GuestPresent> guestPresents) {
         this.context = context;
         this.layout = layout;
-        this.guestInforPresentsList = guestInforPresents;
+        this.guestPresentsList = guestPresents;
     }
 
     @Override
     public int getCount() {
-        return guestInforPresentsList.size();
+        return guestPresentsList.size();
     }
 
     @Override
@@ -65,9 +65,9 @@ public class GuestInforAdapter extends BaseAdapter{
             holder = (ViewHolder) view.getTag();
         }
 
-        GuestInforPresent guestInforPresent = guestInforPresentsList.get(i);
-        holder.userName.setText(guestInforPresent.getName());
-        holder.image.setImageResource(guestInforPresent.getArrow());
+        GuestPresent guestPresent = guestPresentsList.get(i);
+        holder.userName.setText(guestPresent.getName());
+        holder.image.setImageResource(guestPresent.getArrow());
 
         return view;
     }

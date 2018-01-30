@@ -45,12 +45,12 @@ public class LogInActivity extends AppCompatActivity {
     Integer[] lockPermissionIndex; // TO SAVE USER_LOCK RELATIONSHIP DATA
 
 //    final String urlGetUserInformation = "https://bksmartlock.000webhostapp.com/getUserData.php";
-//    final String urlGetUserLockInformation = "https://bksmartlock.000webhostapp.com/getUserLockData.php";
+//    final String urlGetAccessPermission = "https://bksmartlock.000webhostapp.com/getUserLockData.php";
 //    final String urlGetLocksInformation = "https://bksmartlock.000webhostapp.com/getLockData.php";
 
-    final String urlGetUserInformation = "http://192.168.56.1:8012/bksmartlock/searchUserData.php";
-    final String urlGetUserLockInformation = "http://192.168.56.1:8012/bksmartlock/getUserLockData.php";
-    final String urlGetLocksInformation = "http://192.168.56.1:8012/bksmartlock/getLockData.php";
+    final String urlGetUserInformation = "http://192.168.56.1:8012/bksmartlock/searchUserInformation.php";
+    final String urlGetAccessPermission = "http://192.168.56.1:8012/bksmartlock/getAccessPermission.php";
+    final String urlGetLocksInformation = "http://192.168.56.1:8012/bksmartlock/getLockInformation.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -201,7 +201,7 @@ public class LogInActivity extends AppCompatActivity {
                 });
 
         // GET LOCK-USER getUserLockInformation INFORMATION
-        final StringRequest getUserLockInformation = new StringRequest(Request.Method.POST, urlGetUserLockInformation,
+        final StringRequest getUserLockInformation = new StringRequest(Request.Method.POST, urlGetAccessPermission,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
