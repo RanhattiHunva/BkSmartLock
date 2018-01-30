@@ -208,13 +208,13 @@ public class FragmentSettingDefault extends Fragment{
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> param = new HashMap<>();
                 param.put("id",String.valueOf(curUserData.getInt(0)));
-                param.put("fullName", curUserData.getString(7));
-                param.put("passwords", curUserData.getString(2));
-                param.put("position", curUserData.getString(3));
-                param.put("department", curUserData.getString(4));
-                param.put("phoneNumber", curUserData.getString(5));
-                param.put("email", curUserData.getString(6));
-                param.put("securityKey", curUserData.getString(8));
+                param.put("fullName", curUserData.getString(2));
+                param.put("passwords", curUserData.getString(3));
+                param.put("position", curUserData.getString(4));
+                param.put("department", curUserData.getString(5));
+                param.put("phoneNumber", curUserData.getString(6));
+                param.put("email", curUserData.getString(7));
+                param.put("AES_key", curUserData.getString(8));
                 return param;
             }
         };

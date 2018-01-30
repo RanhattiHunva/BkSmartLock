@@ -77,13 +77,13 @@ public class LogInActivity extends AppCompatActivity {
         database.QueryData("CREATE TABLE IF NOT EXISTS user_information(" +
                 "id INTEGER DEFAULT 0, " +
                 "username VARCHAR(50), " +
+                "fullName VARCHAR(50), " +
                 "passwords VARCHAR(50), " +
                 "position VARCHAR(50), " +
                 "department VARCHAR(50), " +
                 "phoneNumber VARCHAR(50), " +
                 "email VARCHAR(50), " +
-                "fullName VARCHAR(50), " +
-                "securityKey VARCHAR(32))");
+                "AES_key VARCHAR(32))");
 
         // RECREATE LOCKS TABLE
         database.QueryData("DROP TABLE IF EXISTS lock_information");
@@ -245,12 +245,12 @@ public class LogInActivity extends AppCompatActivity {
                             database.QueryData("INSERT INTO user_information  VALUES" +
                                     "("+Integer.parseInt(arrayData[rowIndex][0])+"," +
                                     "'"+arrayData[rowIndex][1]+"'," +
+                                    "'"+arrayData[rowIndex][2]+"',"+
                                     "'"+arrayData[rowIndex][3]+"'," +
                                     "'"+arrayData[rowIndex][4]+"'," +
                                     "'"+arrayData[rowIndex][5]+"'," +
                                     "'"+arrayData[rowIndex][6]+"'," +
                                     "'"+arrayData[rowIndex][7]+"',"+
-                                    "'"+arrayData[rowIndex][2]+"',"+
                                     "'"+arrayData[rowIndex][8]+"')");
                             // GET DATA LOCK OF THE USER
                             requestQueue.add(getUserLockInformation);

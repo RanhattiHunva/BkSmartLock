@@ -247,11 +247,11 @@ public class FragmentUser extends Fragment {
 
                         // SAVE TO OFFLINE SQLite DATABASE
                         database.QueryData("UPDATE user_information SET " +
+                                "fullName = '"+ fullName + "', " +
                                 "position = '"+ position + "', " +
                                 "department = '"+ department + "', " +
                                 "phoneNumber = '"+ phoneNumber + "', " +
-                                "email = '"+ email + "'," +
-                                "fullName = '"+ fullName + "'" +
+                                "email = '"+ email + "' " +
                                 "WHERE username = '"+ userName +"' ");
                         updatePresentData();
 
@@ -290,20 +290,20 @@ public class FragmentUser extends Fragment {
         userName = curData.getString(1);
         textUsername.setText(getString(R.string.user_name).concat(userName));
 
-        position = curData.getString(3);
+        fullName = curData.getString(2);
+        textFullName.setText(getString(R.string.full_name).concat(fullName));
+
+        position = curData.getString(4);
         textPosition.setText(getString(R.string.position).concat(position));
 
-        department = curData.getString(4);
+        department = curData.getString(5);
         textDepartment.setText(getString(R.string.department).concat(department));
 
-        phoneNumber = curData.getString(5);
+        phoneNumber = curData.getString(6);
         textPhoneNumber.setText(getString(R.string.phone_number).concat(phoneNumber));
 
-        email = curData.getString(6);
+        email = curData.getString(7);
         textEmail.setText(getString(R.string.email).concat(email));
-
-        fullName = curData.getString(7);
-        textFullName.setText(getString(R.string.full_name).concat(fullName));
 
         curData.close();
 

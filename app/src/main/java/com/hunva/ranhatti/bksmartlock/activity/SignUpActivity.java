@@ -202,7 +202,7 @@ public class SignUpActivity extends AppCompatActivity {
                 param.put("department",department);
                 param.put("phoneNumber",phoneNumber);
                 param.put("email",email);
-                param.put("securityKey","asd5613246ASD879Q654654sd4a6sd46");
+                param.put("AES_key","asd5613246ASD879Q654654sd4a6sd46");
                 return param;
             }
         };
