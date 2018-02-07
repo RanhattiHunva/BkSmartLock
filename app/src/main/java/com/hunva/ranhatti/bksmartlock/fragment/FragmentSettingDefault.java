@@ -141,7 +141,7 @@ public class FragmentSettingDefault extends Fragment{
     }
 
     // UPDATE USER INFORMATION TO SEVER
-    private void updateUserInformation(){
+    protected void updateUserInformation(){
         final RequestQueue requestQueue = Volley.newRequestQueue(activity);
 
         final Cursor curUserData = database.GetData("SELECT * FROM user_information");

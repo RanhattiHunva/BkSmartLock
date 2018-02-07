@@ -69,4 +69,6 @@
     <string name="list_users">LIST USERS OF THIS LOCK</string>
     <string name="unlock_by">Unlock by </string>
     <string name="notify_need_internet_admin">You need internet connection to perform admin  permission! </string>
+    <string name="cannot_sync_data">No internet connection! So we can\'t sync your data now! Please do it later by yourself </string>
+    <string name="cannot_send_request_admin">Need internet connection to send your request</string>
 </resources>

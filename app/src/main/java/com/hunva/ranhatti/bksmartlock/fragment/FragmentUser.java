@@ -3,13 +3,10 @@ package com.hunva.ranhatti.bksmartlock.fragment;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -151,7 +148,6 @@ public class FragmentUser extends Fragment {
                 btnSavePasswords.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
                         // CHECK INFORMATION
                         String passwordsCompare = sharedPreferences.getString("passwords","");
                         String newPasswords = edtNewPasswords.getText().toString();
@@ -171,8 +167,13 @@ public class FragmentUser extends Fragment {
                             dialogChangePasswords.dismiss();
                         }
                         else {
-                            Toast.makeText(activity,
-                                    getString(R.string.notify_wrong_confirm_passwords),Toast.LENGTH_LONG).show();
+                            Toast.makeText(activity,getString(R.string.notify_wrong_confirm_passwords),Toast.LENGTH_LONG).show();
+                        }
+
+                        if (activity.isInternetOnline()){
+                            fragmentSettingDefault.updateUserInformation();
+                        }else{
+                            Toast.makeText(activity, getString(R.string.cannot_sync_data),Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -193,18 +194,23 @@ public class FragmentUser extends Fragment {
         textRequireAdmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(activity,getString(R.string.notify_require_admin),Toast.LENGTH_LONG).show();
+                if (activity.isInternetOnline()){
+                    Toast.makeText(activity,getString(R.string.notify_require_admin),Toast.LENGTH_LONG).show();
 
-                textRequireAdmin.setClickable(false);
-                textRequireAdmin.setTextColor(getResources().getColor(R.color.colorText));
-                textRequireAdmin.setText(getString(R.string.waiting_acceptation_admin));
+                    textRequireAdmin.setClickable(false);
+                    textRequireAdmin.setTextColor(getResources().getColor(R.color.colorText));
+                    textRequireAdmin.setText(getString(R.string.waiting_acceptation_admin));
 
-                database.QueryData("UPDATE lock_information SET certificationAdmin = 2 WHERE id = "+sharedPreferences.getInt("currentLock",0));
+                    database.QueryData("UPDATE lock_information SET certificationAdmin = 2 WHERE id = "+sharedPreferences.getInt("currentLock",0));
 
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean("isDataChange",true);
-                editor.apply();
-                fragmentSettingDefault.presentSyncStatus(sharedPreferences.getBoolean("isDataChange",false));
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putBoolean("isDataChange",true);
+                    editor.apply();
+                    fragmentSettingDefault.presentSyncStatus(sharedPreferences.getBoolean("isDataChange",false));
+                    fragmentSettingDefault.updateUserInformation();
+                }else{
+                    Toast.makeText(activity, getString(R.string.cannot_send_request_admin),Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -261,6 +267,12 @@ public class FragmentUser extends Fragment {
                         fragmentSettingDefault.presentSyncStatus(sharedPreferences.getBoolean("isDataChange",false));
 
                         dialogChangeInformation.dismiss();
+
+                        if (activity.isInternetOnline()){
+                            fragmentSettingDefault.updateUserInformation();
+                        }else{
+                            Toast.makeText(activity, getString(R.string.cannot_sync_data),Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
 
@@ -328,7 +340,7 @@ public class FragmentUser extends Fragment {
 
     // CHANGE FRAGMENT IN THE FRAME LAYOUT SETTING
     private void changeSettingFragment(){
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
         Fragment fragmentSetting;
 
         if (!flagSettingFragment) {
