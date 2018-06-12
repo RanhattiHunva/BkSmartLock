@@ -50,8 +50,11 @@ public class FragmentAdmin extends Fragment {
 
     SharedPreferences sharedPreferences;
 
-    final String urlGetLockHistory = "http://192.168.56.1:8012/bksmartlock/getLockHistory.php";
-    final String urlGetListUsers = "http://192.168.56.1:8012/bksmartlock/getListUsers.php";
+//    final String urlGetLockHistory = "http://bksmartlock.000webhostapp.com/getLockHistory.php";
+//    final String urlGetListUsers = "http://bksmartlock.000webhostapp.com/getListUsers.php";
+
+    final String urlGetLockHistory = "http://192.168.31.71:8888/bksmartlock/getLockHistory.php";
+    final String urlGetListUsers = "http://192.168.31.71:8888/bksmartlock/getListUsers.php";
 
     @Nullable
     @Override

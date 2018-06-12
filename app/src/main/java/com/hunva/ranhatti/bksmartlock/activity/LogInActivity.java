@@ -48,9 +48,9 @@ public class LogInActivity extends AppCompatActivity {
 //    final String urlGetAccessPermission = "https://bksmartlock.000webhostapp.com/getUserLockData.php";
 //    final String urlGetLocksInformation = "https://bksmartlock.000webhostapp.com/getLockData.php";
 
-    final String urlCheckUserInformation = "http://192.168.56.1:8012/bksmartlock/searchUserInformation.php";
-    final String urlGetAccessPermission = "http://192.168.56.1:8012/bksmartlock/getAccessPermission.php";
-    final String urlGetLocksInformation = "http://192.168.56.1:8012/bksmartlock/getLockInformation.php";
+    final String urlCheckUserInformation = "http://192.168.31.71:8888/bksmartlock/searchUserInformation.php";
+    final String urlGetAccessPermission = "http://192.168.31.71:8888/bksmartlock/getAccessPermission.php";
+    final String urlGetLocksInformation = "http://192.168.31.71:8888/bksmartlock/getLockInformation.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

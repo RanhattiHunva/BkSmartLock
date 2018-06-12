@@ -54,8 +54,8 @@ public class FragmentSettingDefault extends Fragment{
 //    String urlUpdateUserInformation = "https://bksmartlock.000webhostapp.com/updateUserData.php";
 //    String urlUpdateAccessPermission = "https://bksmartlock.000webhostapp.com/updateUserLockData.php";
 
-    final String urlUpdateUserInformation = "http://192.168.56.1:8012/bksmartlock/updateUserInformation.php";
-    final String urlUpdateAccessPermission = "http://192.168.56.1:8012/bksmartlock/updateAccessPermission.php";
+    final String urlUpdateUserInformation = "http://192.168.31.71:8888/bksmartlock/updateUserInformation.php";
+    final String urlUpdateAccessPermission = "http://192.168.31.71:8888/bksmartlock/updateAccessPermission.php";
 
     @Nullable
     @Override

@@ -39,8 +39,8 @@ public class SignUpActivity extends AppCompatActivity {
 //    final String urlInsertNewUser = "https://bksmartlock.000webhostapp.com/insertUserData.php";
 //    final String urlInsertNewAccessPermission = "https://bksmartlock.000webhostapp.com/insertUserLockData.php";
 
-    final String urlInsertNewUser = "http://192.168.56.1:8012/bksmartlock/insertNewUser.php";
-    final String urlInsertNewAccessPermission = "http://192.168.56.1:8012/bksmartlock/insertNewAccessPermission.php";
+    final String urlInsertNewUser = "http://192.168.31.71:8888/bksmartlock/insertNewUser.php";
+    final String urlInsertNewAccessPermission = "http://192.168.31.71:8888/bksmartlock/insertNewAccessPermission.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
